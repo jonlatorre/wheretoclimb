@@ -1,0 +1,31 @@
+{% extends "site_base.html"%}
+
+{% load i18n %}
+
+{% block title%}{% trans "Croquis list"%}{% endblock %}
+
+{% block body %}
+
+<h1>{% trans "Croquis List" %}</h1>
+
+<table>
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Foto</th>
+                <th>Comentario</th>
+                <th>Origen</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for entry in object_list %}
+        <tr>
+        <td><a href="{% url croquis_view entry.id %}">{{entry.name}}</a></td>
+        <td><img src="{{entry.thumbnail_image.url}}" /></td>
+        <td>{{entry.comentario}}</td>
+        <td>{{entry.origen}}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

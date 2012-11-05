@@ -1,0 +1,186 @@
+{% extends "site_base.html"%}
+{% block title%}Detalle de escuela {{ escuela.nombre }}{% endblock %}
+{% block extra_head %}
+{{ form.media.js }}
+<!--Para el +1 de google -->
+<script type="text/javascript" src="http://apis.google.com/js/plusone.js"></script>
+<!--Para el me gusta de facebook -->
+<script src="http://connect.facebook.net/es_ES/all.js#appId=150167131719845&amp;xfbml=1"></script>
+<script type="text/javascript" language="javascript">
+        function anadir_croquis(id) {
+			
+            console.log("Vamos a aladir un croquis a "+id);
+            //$('#anadir_croquis').
+            var $dialog = $('<div id="dialogcroquis"></div>')
+                .html('')
+                .dialog({
+                    autoOpen: false,
+                    title: 'Añadir croquis',
+                    modal: true
+                });
+            $dialog.dialog( "option", "minWidth", 450 );
+            $dialog.dialog('open');
+            $dialog.load('/escuelas/croquis/nuevo/'+id+'/');
+            // prevent the default action, e.g., following a link
+            return false;
+            }
+        function ver_sector(url,nombre) {
+            console.log("Vamos a ver los detalles del sector:");
+            console.log(url);
+            var $dialog = $('<div id="dialogsector"></div>')
+                .html('')
+                .dialog({
+                    autoOpen: false,
+                    title: 'Detalle sector '+nombre,
+                    modal: false
+                });
+            $dialog.dialog( "option", "minWidth", 700 );
+            $dialog.dialog( "option", "minHeight", 580 );
+            $dialog.dialog('open');
+            $dialog.load(url);
+            // prevent the default action, e.g., following a link
+            return false;
+        };
+
+        function nuevo_sector(id) {
+            console.log("Vamos a aladir un sector a "+id);
+            var $dialog = $('<div id="dialog"></div>')
+                .html('<iframe src ="/escuelas/sector/nuevo/'+id+'/" width="420" height="580" frameborder="0" ></iframe>')
+                .dialog({
+                    autoOpen: false,
+                    title: 'Nuevo sector',
+                    modal: true
+                });
+            $dialog.dialog( "option", "minWidth", 450 );
+            $dialog.dialog('open');
+            //$dialog.load('/escuelas/sector/nuevo/'+id+'/');
+            // prevent the default action, e.g., following a link
+            return false;
+        };
+        function nuevo_proyecto() {
+            var $dialogGroup = $('<div id="dialog"></div>')
+                .html('')
+                .dialog({
+                    autoOpen: false,
+                    title: 'Nuevo proyecto',
+                    modal: true
+                });
+            $dialogGroup.dialog('open');
+            $dialogGroup.load('/proyectos/nuevo/{{escuela.id}}/');
+            // prevent the default action, e.g., following a link
+            return false;
+        }
+        
+	$(document).ready(function(){
+		$('#anadir_croquis').modal({
+		keyboard: false
+		});
+	});
+     </script>
+{% endblock %}
+
+{% block body %}
+
+
+<hr>
+
+    <div class="row">
+		<div class="span6">
+			{{ form.map }}
+		</div>
+		<div class="span6">
+
+
+				<h3>{{ escuela.nombre.capitalize }} es una escuela de {{ escuela.get_tipo }}</h3>
+				Está situada en la provincia {{escuela.nombre_provincia}}
+				
+				<g:plusone></g:plusone>
+		
+				<div id="fb-root"></div>
+		
+				<fb:like href="http://www.dondeescalar.es/escuelas/ver/{{escuela.slug}}/{{escuela.id}}/" send="false"
+					width="380" show_faces="true" font=""></fb:like>
+				<!--
+				<input name="star1" type="radio" class="star" disabled="disabled"/>
+				<input name="star2" type="radio" class="star" disabled="disabled"/>
+				<input name="star3" type="radio" class="star" disabled="disabled" checked="checked"/>
+				<input name="star4" type="radio" class="star" disabled="disabled"/>
+				<input name="star5" type="radio" class="star" disabled="disabled"/>
+				-->
+				{% if user.is_authenticated %}
+					{% load phileo_tags %}
+					{% likes_widget request.user escuela %}
+					{% likes_js request.user escuela %}
+				{% endif %}
+				
+				<button class="btn" name="nuevo_proyecto" id="nuevo_proyecto" onclick="nuevo_proyecto();">Añadir a mis proyectos</button>
+
+				<img src="{{escuela.foto.display.url}}" /> <br />
+				<h3>Descripción y comentarios</h3>
+				<p>{{ escuela.descripcion }}</p>
+								<div id="fb-root"></div>
+				<script src="http://connect.facebook.net/es_ES/all.js#xfbml=1"></script>
+				<fb:comments href="http://dondeescalar.es/escuelas/ver/{{escuela.slug}}/{{escuela.id}}/"
+				num_posts="20" width="580"></fb:comments>
+
+				<h3>Sectores</h3>
+				{%  if escuela.sectores.count %}
+					<ul class="circle">
+					{% for sector in escuela.sectores.all %}
+					<li><a href="#" onclick='ver_sector("{{ sector.get_absolute_url }}","{{ sector.slug }}");'>Sector {{ sector.nombre }}</a></li>
+					{% endfor %}
+					</ul>
+				{% else %}
+					<div class="well">Lo siento, aun no hay ningún sector, da de alta uno!</div>
+				{% endif %}
+					<button class="btn" name="nuevo_sector" id="nuevo_sector" onclick="nuevo_sector({{escuela.id}});">Añadir sector</button>
+			
+			
+				<h3>Croquis de {{ escuela.nombre }}</h3>
+				{% if escuela.croquises.count %}
+				<table>
+				<tr>
+				{% for croquis in escuela.croquises.all %}
+				<td>
+					<a href="{{croquis.original_image.url}}" class="lightbox" id="lightbox"><img src="{{croquis.thumbnail_image.url}}" /></a>
+				<br /> {{croquis.name }}
+				</td>
+				{% if forloop.counter|divisibleby:4 and not forloop.last %}</tr><tr>{% endif %}
+				{% endfor %}
+				</tr>
+				</table>
+
+				{% else %}
+					<div class="well">Sin croquis.</div>
+				{% endif %}
+				<a class="btn" data-toggle="modal" href="#anadir_croquis" >Añade uno!</a>
+				<button class="btn" onclick="anadir_croquis({{escuela.id}});">Añade uno!</button>
+			
+			
+				<h3>Meteograma</h3>
+				{% if escuela.meteo.foreca.get_meteogram_picture %}
+				<img width="550" src="{{escuela.meteo.foreca.get_meteogram_picture}}" />
+				{% else %}
+				<div class="well">Sin pronostico
+				{% endif %}
+
+		
+		</div>
+    </div>
+<!-- Aqui estan las modales -->
+<div class="modal hide fade" id="anadir_sector">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal">×</a>
+    <h3>Modal Heading</h3>
+  </div>
+  <div class="modal-body">
+    <strong>Text in a modal</strong>
+    <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia …</p>
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal">Close</a>
+    <a href="#" class="btn btn-primary">Save changes</a>
+  </div>
+</div>
+
+{% endblock %}

@@ -1,0 +1,44 @@
+{% block extra_head %}
+<!--Para el databable -->
+<script type="text/javascript" language="javascript" src="/static/js/jquery.dataTables.js"></script>
+<link href="/static/css/table.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" charset="utf-8">
+        $(document).ready(function() {
+            //Preparamos todas las tablas para que sea dataTables
+            console.log("Vamos a preparar la tabla");
+
+            $('table[name*=escuelas_{{ tipo }}]').dataTable();
+
+            console.log("Deberia estar lista la tabla");
+        } );
+</script>
+
+
+{% endblock %}
+
+{% block content %}
+    <!--<div id="meta"></div>-->
+        <table name="escuelas{{tipo}}_">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Provincia</th>
+                <th>Pais</th>
+                <th>Foto</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for escuela in escuelas %}
+        <tr>
+        <td> <a href="/escuelas/ver/{{escuela.slug}}/{{escuela.id}}">{{ escuela.nombre.capitalize }}</a> </td>
+        <td>{{ escuela.get_tipo }}</td>
+        <td>{{ escuela.nombre_provincia }}</td>
+        <td>{{ escuela.pais }}</td>
+        <td><img src="{{ escuela.foto.get_thumbnail_url }}" /></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

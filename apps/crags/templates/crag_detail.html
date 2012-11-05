@@ -1,0 +1,183 @@
+{% extends "site_base.html"%}
+{% block title%}Detalle de escuela {{ crag.nombre }}{% endblock %}
+{% block extra_script %}
+{{ form.media.js }}
+<!--Para el +1 de google -->
+<script type="text/javascript" src="http://apis.google.com/js/plusone.js"></script>
+<!--Para el me gusta de facebook -->
+<script src="http://connect.facebook.net/es_ES/all.js#appId=150167131719845&amp;xfbml=1"></script>
+<script type="text/javascript" language="javascript">
+        function anadir_croquis(id) {
+			
+            console.log("Vamos a aladir un croquis a "+id);
+            //$('#anadir_croquis').
+            var $dialog = $('<div id="dialogcroquis"></div>')
+                .html('')
+                .dialog({
+                    autoOpen: false,
+                    title: 'Añadir croquis',
+                    modal: true
+                });
+            $dialog.dialog( "option", "minWidth", 450 );
+            $dialog.dialog('open');
+            $dialog.load('/escuelas/croquis/nuevo/'+id+'/');
+            // prevent the default action, e.g., following a link
+            return false;
+            }
+        function view_sector(url,nombre) {
+            console.log("Vamos a ver los detalles del sector:");
+            console.log(url);
+            var $dialog = $('<div id="dialogsector"></div>')
+                .html('')
+                .dialog({
+                    autoOpen: false,
+                    title: 'Detalle sector '+nombre,
+                    modal: false
+                });
+            $dialog.dialog( "option", "minWidth", 700 );
+            $dialog.dialog( "option", "minHeight", 580 );
+            $dialog.dialog('open');
+            $dialog.load(url);
+            // prevent the default action, e.g., following a link
+            return false;
+        };
+
+        function nuevo_sector(id) {
+            console.log("Vamos a aladir un sector a "+id);
+            var $dialog = $('<div id="dialog"></div>')
+                .html('<iframe src ="/escuelas/sector/nuevo/'+id+'/" width="420" height="580" frameborder="0" ></iframe>')
+                .dialog({
+                    autoOpen: false,
+                    title: 'Nuevo sector',
+                    modal: true
+                });
+            $dialog.dialog( "option", "minWidth", 450 );
+            $dialog.dialog('open');
+            //$dialog.load('/escuelas/sector/nuevo/'+id+'/');
+            // prevent the default action, e.g., following a link
+            return false;
+        };
+        function nuevo_proyecto() {
+            var $dialogGroup = $('<div id="dialog"></div>')
+                .html('')
+                .dialog({
+                    autoOpen: false,
+                    title: 'Nuevo proyecto',
+                    modal: true
+                });
+            $dialogGroup.dialog('open');
+            $dialogGroup.load('/proyectos/nuevo/{{crag.id}}/');
+            // prevent the default action, e.g., following a link
+            return false;
+        }
+        
+	$(document).ready(function(){
+		$('#anadir_croquis').modal({
+		keyboard: false
+		});
+        $('#myTab a:last').tab('show');
+	});
+     </script>
+{% endblock %}
+
+{% block body %}
+<div class="row">
+    <div class="span4">
+        {{ form.map }}
+        <button class="btn" name="nuevo_proyecto" id="nuevo_proyecto" onclick="nuevo_proyecto();">Añadir a mis proyectos</button>
+    </div>
+    <div class="span8">
+        <ul class="nav nav-tabs">
+            <li><a href="#home" data-toggle="tab">Datos generales</a></li>
+            <li><a href="#sectors" data-toggle="tab">Sectores</a></li>
+            <li><a href="#topos" data-toggle="tab">Croquis</a></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane active" id="home">
+                <h3>{{ crag.name.capitalize }} is a {{ crag.get_type }} climbing crag located in {{crag.country}} </h3>
+                <p>{{ crag.description }}</p>
+                
+                <g:plusone></g:plusone>
+                <div id="fb-root"></div>
+                <fb:like href="http://www.dondeescalar.es/escuelas/ver/{{crag.slug}}/{{crag.id}}/" send="false"	width="380" show_faces="true" font=""></fb:like>
+                <img src="{{crag.foto.display.url}}" /> <br />
+                
+                <h4>Coments</h4>
+                <div id="fb-root"></div>
+                <script src="http://connect.facebook.net/es_ES/all.js#xfbml=1"></script>
+                <fb:comments href="http://dondeescalar.es/escuelas/ver/{{crag.slug}}/{{crag.id}}/"  num_posts="20" width="580"></fb:comments>
+            </div>
+            
+            <div class="tab-pane" id="sectors">
+                <h3>Sectors</h3>
+                {%  if crag.sectors.count %}
+                    <ul class="circle">
+                    {% for sector in crag.sectors.all %}
+                    <li><a href="#" onclick='view_sector("{{ sector.get_absolute_url }}","{{ sector.slug }}");'>{{ sector.name }}</a></li>
+                    {% endfor %}
+                    </ul>
+                {% else %}
+                    <div class="well">Lo siento, aun no hay ningún sector, da de alta uno!</div>
+                {% endif %}
+                    
+                    <a href="#new_sector_modal" role="button" class="btn" data-toggle="modal">Add new sector</a>
+            </div>
+        
+            <div class="tab-pane" id="topos">
+                <h3>Croquis de {{ crag.nombre }}</h3>
+                {% if crag.topos.count %}
+                <table>
+                <tr>
+                {% for croquis in crag.topos.all %}
+                <td>
+                <a href="{{croquis.original_image.url}}" class="lightbox" id="lightbox"><img src="{{croquis.thumbnail_image.url}}" /></a>
+                <br /> {{croquis.name }}
+                </td>
+                {% if forloop.counter|divisibleby:4 and not forloop.last %}</tr><tr>{% endif %}
+                {% endfor %}
+                </tr>
+                </table>
+
+                {% else %}
+                    <div class="well">Sin croquis.</div>
+                {% endif %}
+                <a class="btn" data-toggle="modal" href="#new_topo_modal" >Add one!</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Aqui estan las modales -->
+
+<div class="modal hide fade" id="new_sector_modal">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal">×</a>
+    <h3>New Sector</h3>
+  </div>
+  <div class="modal-body">
+    <strong>Add a new sector to {{ crag.name }}</strong>
+    <form name="sector_form" enctype="multipart/form-data" action="{% url crags_sector_new crag.id%}" method="post">{% csrf_token %}
+    <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia …</p>
+    {{ form_sector.as_p }}
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal">Close</a>
+    <input  class="submit btn-form" type="submit" value="Add" />
+  </div>
+</div>
+
+<div class="modal hide fade" id="new_topo_modal">
+  <div class="modal-header">
+    <a class="close" data-dismiss="modal">×</a>
+    <h3>New Todo</h3>
+  </div>
+  <div class="modal-body">
+    <strong>Add a new topo to {{ crag.name }}</strong>
+    {{ form_topo.as_p }}
+  </div>
+  <div class="modal-footer">
+    <a href="#" class="btn" data-dismiss="modal">Close</a>
+    <a href="#" class="btn btn-primary">Add</a>
+  </div>
+</div>
+
+{% endblock %}

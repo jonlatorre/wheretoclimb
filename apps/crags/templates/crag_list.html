@@ -1,0 +1,35 @@
+{% extends "site_base.html"%}
+
+{% load i18n %}
+
+{% block title%}{% trans "Crag list"%}{% endblock %}
+
+{% block body %}
+<div class="row-fluid">
+    <div class="span2">...</div>
+    <div class="span10">...
+        <h1>{% trans "Crag List" %}</h1>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>Nombre</th>
+                    <th>Tipo</th>
+                    <th>Pais</th>
+                    <th>Foto</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for crag in crag_list %}
+            <tr>
+            <td> <a href="{% url crags_crag_detail crag.slug crag.id %}">{{ crag.name.capitalize }}</a> </td>
+            <td>{{ crag.get_type }}</td>
+            <td>{{ crag. }}</td>
+            <td>{{ crag.country }}</td>
+            <td><img src="{{ crag.photo.get_thumbnail_url }}" /></td>
+            </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

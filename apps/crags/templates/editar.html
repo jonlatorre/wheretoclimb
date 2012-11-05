@@ -1,0 +1,49 @@
+{% extends "base.html"%}
+
+{% block title%}Editar Escuela {{escuela.nombre}}{% endblock %}
+{% block extra_head %}
+{{ mapa.media.js }}
+<script src='/static/js/jquery.MetaData.js' type="text/javascript" language="javascript"></script>
+<script src='/static/js/jquery.rating.js' type="text/javascript" language="javascript"></script>
+<link href='/static/css/jquery.rating.css' type="text/css" rel="stylesheet"/>
+<script type="text/javascript">
+    window.escuela = {
+        markerOver: function() { this.openInfoWindow(); },
+        markerOut: function() { this.closeInfoWindow(); },
+        arrastrar: function(mouseEvent) {
+            console.log("Somos unos arrastrados");
+            console.log("Hemos llegado a "+mouseEvent.latLng.lat()+" "+mouseEvent.latLng.lng());
+            console.log("Cambiemos los inputs!");
+            $("input[name*=lat]").val(mouseEvent.latLng.lat());
+            $("input[name*=lon]").val(mouseEvent.latLng.lng());
+            geocoder = new google.maps.Geocoder();
+            geocoder.geocode( { 'location': mouseEvent.latLng }, function(results, status) {
+                if (status == google.maps.GeocoderStatus.OK) {
+                    //$('#location').html('<p><b>Location:</b>' + results[0].geometry.location + '</p>');
+                    provincia = results[0].address_components[2].long_name;
+                    console.log("Estamos en la provincia "+provincia);
+                    $("option:contains("+provincia+")").attr('selected','selected');
+                    console.log("Deberia haber cambiado la provincia");
+                } else {
+                    alert("Geocode was not successful for the following reason: " + status);
+                }
+            });
+
+            console.log("Inputs cambiados");
+        }
+    };
+</script>
+
+{% endblock %}
+{% block content %}
+{{ mapa.map }}
+<form action="/escuelas/editar/{{escuela.id}}/" method="post">{% csrf_token %}
+            <input name="star1" type="radio" class="star"/>
+            <input name="star2" type="radio" class="star"/>
+            <input name="star3" type="radio" class="star"/>
+            <input name="star4" type="radio" class="star"/>
+            <input name="star5" type="radio" class="star"/>
+<br />
+{{ form.as_p }}
+<input type="submit" value="Submit" />
+{% endblock %}

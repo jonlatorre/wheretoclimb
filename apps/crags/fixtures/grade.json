@@ -1,0 +1,13 @@
+[{"pk": 1, "model": "crags.grade", "fields": {"name": "III", "value": 1}},
+{"pk": 2, "model": "crags.grade", "fields": {"name": "IV", "value": 2}}, 
+{"pk": 3, "model": "crags.grade", "fields": {"name": "IV+", "value": 3}}, 
+{"pk": 4, "model": "crags.grade", "fields": {"name": "V", "value": 4}}, 
+{"pk": 5, "model": "crags.grade", "fields": {"name": "V+", "value": 5}}, 
+{"pk": 6, "model": "crags.grade", "fields": {"name": "6a", "value": 6}}, 
+{"pk": 7, "model": "crags.grade", "fields": {"name": "6a+", "value": 7}}, 
+{"pk": 8, "model": "crags.grade", "fields": {"name": "6b", "value": 8}}, 
+{"pk": 9, "model": "crags.grade", "fields": {"name": "6b+", "value": 9}}, 
+{"pk": 10, "model": "crags.grade", "fields": {"name": "6c", "value": 10}}, 
+{"pk": 11, "model": "crags.grade", "fields": {"name": "6c+", "value": 11}}, 
+{"pk": 12, "model": "crags.grade", "fields": {"name": "7a", "value": 12}}, 
+{"pk": 13, "model": "crags.grade", "fields": {"name": "7a+", "value": 13}}]

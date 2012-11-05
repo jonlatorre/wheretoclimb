@@ -1,0 +1,73 @@
+    <script type="text/javascript" src="/static/js/jquery-1.5.1.min.js"></script>
+    <link type="text/css" href="/static/css/smoothness/jquery-ui-1.8.12.custom.css" rel="Stylesheet" />
+    <script type="text/javascript" src="/static/js/jquery-ui-1.8.12.custom.min.js"></script>
+
+    <script type="text/javascript" language="javascript">
+        function nueva_via(id) {
+            console.log("Vamos a añadir una via a "+id);
+            var $dialog = $('<div id="dialogvia" ></div>')
+                .html('<iframe src ="/escuelas/via/nueva/'+id+'/" width="420" height="500" frameborder="0" ></iframe>')
+                .dialog({
+                    autoOpen: false,
+                    title: 'Nueva via',
+                    modal: true
+                });
+            $dialog.dialog( "option", "minWidth", 450 );
+            $dialog.dialog('open');
+            //$dialog.load('/escuelas/via/nueva/'+id+'/');
+            // prevent the default action, e.g., following a link
+            return false;
+        };
+        function ver_via(url,nombre) {
+            console.log("Vamos a ver los detalles de la via:");
+            console.log(url);
+            var $dialog = $('<div id="dialogvia"></div>')
+                .html('')
+                .dialog({
+                    autoOpen: false,
+                    title: 'Detalle via '+nombre,
+                    modal: true
+                });
+            $dialog.dialog( "option", "minWidth", 700 );
+            $dialog.dialog( "option", "minHeight", 580 );
+            $dialog.dialog('open');
+            $dialog.load(url);
+            // prevent the default action, e.g., following a link
+            return false;
+        };
+    </script>
+    <div id="title"><h1>Sector de escalada {{ sector.nombre }} de la escuela {{ sector.escuela.nombre}}</h1></div>
+    <div id="entry">
+        <h3>Descripción</h3>
+        <p>{{sector.comentario}}</p>
+        <h3>Vías</h3>
+        <table name="vias">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Grado</th>
+                <th>Metros</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for via in sector.vias.all %}
+        <tr>
+        <td> <a href="#" onclick='ver_via("{{ via.get_absolute_url }}","{{ via.slug }}")'>{{ via.nombre.capitalize }}</a> </td>
+        <td>{{ via.get_tipo }}</td>
+        <td>{{ via.grado.nombre }}</td>
+        <td>{{ via.metros }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+        <br />
+        <button name="nueva_via" id="nueva_via" onclick="nueva_via({{sector.id}});">Añadir via</button>
+    </div>
+    <!--
+    <div id="title"><h2>Comentarios</h2></div>
+    <div id="entry">
+        <div id="fb-root"></div><script src="http://connect.facebook.net/es_ES/all.js#xfbml=1"></script>
+        <fb:comments href="http://dondeescalar.es/escuelas/ver/sector/{{sector.slug}}/{{sector.id}}/"
+        num_posts="20" width="500"></fb:comments>
+    </div>
+    -->

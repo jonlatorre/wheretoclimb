@@ -1,0 +1,16 @@
+{% extends "site_base.html"%}
+
+{% load i18n %}
+
+{% block body %}
+
+<h3>Add a sector to {{crag.name}}</h3>
+
+    <form name="sector_form" enctype="multipart/form-data" action="{% url crags_sector_new crag.id %}" method="post">{% csrf_token %}
+    <h3>Detalles:</h3>
+    {{ form_sector.as_p }}
+    {{ form_foto.as_p }}
+    <input class="submit btn-form" type="submit" value="enviar" />
+    
+
+{% endblock %}

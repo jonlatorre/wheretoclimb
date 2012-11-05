@@ -1,0 +1,26 @@
+{% extends "site_base.html"%}
+
+{% load i18n %}
+
+{% block title%}{% trans "Croquis"%} {{object.name}} {% endblock %}
+
+{% block body %}
+
+<h1>{% trans "Croquis" %} {{ object.name }}</h1>
+
+<table>
+<tr>
+ <img src="{{ object.foto.thumbnail_image.url }}" />
+</tr>
+<tr>
+ Origen: {{ object.origen }}
+</tr>
+<tr>
+ Comentario: {{ object.comentario }}
+</tr>
+ 
+</table>
+
+
+
+{% endblock %}

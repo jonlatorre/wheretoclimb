@@ -1,0 +1,24 @@
+{% extends "main.html"%}
+{% block base %}
+<script type="text/javascript" language="javascript">
+    function send_form(){
+        console.log("Vamos a enviar el form");
+        data = $("#escuela_form").serialize(true);
+        // jQuery
+        // If you are using jQuery, you need this form->object serializer
+        // https://github.com/cowboy/jquery-misc/blob/master/jquery.ba-serializeobject.js
+        console.log(data);
+        Dajaxice.dondeescalar.escuelas.myexample();
+        Dajaxice.dondeescalar.escuelas.send_escuela_form(Dajax.process,{'form':data});
+    }
+</script>
+<h3>Añadiendo una via al sector {{sector.nombre}}</h3>
+<div id="stylized-form">
+    <form name="via_form" enctype="multipart/form-data" action="/escuelas/via/nueva/{{sector.id}}/" method="post">{% csrf_token %}
+    <h3>Detalles:</h3>
+    {{ form_via.as_p }}
+    {{ form_foto.as_p }}
+    <input class="submit btn-form" type="submit" value="Submit" />
+    <!-- <p><input value="Send" onclick="send_form();" type="button"></p> -->
+</div>
+{% endblock %}

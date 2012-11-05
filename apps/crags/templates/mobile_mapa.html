@@ -1,0 +1,65 @@
+{% extends "mobile_base.html"%}
+{% block title%}Mapa de escuelas{% endblock %}
+{% block extra_head %}
+    <!-- El JS del mapa -->
+    {{ form.media.js }}
+    <script type="text/javascript" language="javascript">
+        //Para los markers del mapa
+        window.mapa_escuelas = {
+            verInfo: function() {
+                console.log("Vamos a cerrar los demás infoWindows");
+                //Cerramos el resto de marcadores
+                jQuery.each($('[name="mapa_general"]').getMarkers(), function(index, marker)
+                {
+                    console.log("Cerrando ... ",marker);
+                    marker.closeInfoWindow();
+                });
+                this.openInfoWindow();
+                },
+            markerOut: function() { this.closeInfoWindow(); },
+            getMarkers: function() {return this.getMarkers();}
+        };
+
+        $(function (){
+            //Para las pestañas
+            $( "#tabs" ).tabs();
+            $( "#listado_escuelas" ).load("/escuelas/lista");
+            $("#lista_provincia").load("/escuelas/provincia/01");
+            //$( "#tabs-4" ).load("/escuelas/nueva");
+            $("#id_provincia").change(function() {
+                url = "/escuelas/provincia/"+$("#id_provincia").val()+"/"
+                $("#lista_provincia").load(url);
+
+            });
+        });
+</script>
+{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="column grid_12">
+            <div id="tabs">
+                <ul>
+                    <li><a href="#tabs-1">Mapa</a></li>
+                    <li><a href="#tabs-2">Lista</a></li>
+                    <li><a href="#tabs-3">Provincias</a></li>
+                    <!--<li><a href="/escuelas/nueva" >Nueva</a></li>-->
+                </ul>
+                <div id="tabs-1">
+                    <div style="width:900px;height:768px;">
+                    {{ form.map }}
+                    </div>
+                </div>
+                <div id="tabs-2">
+                    <h2>Lista de todas las escuelas</h2>
+                    <div id="listado_escuelas">esto no se va a ver :)</div>
+                </div>
+                <div id="tabs-3">
+                    Seleccione una provincia: {{ provincia_form.provincia }}
+                    <div id="lista_provincia">Seleccione una provincia</div>
+                </div>
+
+            </div>
+    </div>
+</div>
+{% endblock %}

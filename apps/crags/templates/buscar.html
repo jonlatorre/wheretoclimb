@@ -1,0 +1,49 @@
+{% block extra_head %}
+<!--Para el databable -->
+<script type="text/javascript" language="javascript" src="/static/js/jquery.dataTables.js"></script>
+<link href="/static/css/table.css" rel="stylesheet" type="text/css" />
+
+<script type="text/javascript" charset="utf-8">
+        $(document).ready(function() {
+            //Preparamos todas las tablas para que sea dataTables
+            trace("Vamos a preparar la tabla");
+            $('table[name*=escuelas]').dataTable();
+            trace("Deberia estar lista la tabla");
+        } );
+</script>
+
+
+{% endblock %}
+
+{% block content %}
+<div id="post">
+    <div id="title"><h1>Listado de escuela de escalada</h1></div>
+    <!--<div id="meta"></div>-->
+    <div id="entry">
+
+        <table name="escuelas">
+        <thead>
+            <tr>
+                <th>Nombre</th>
+                <th>Tipo</th>
+                <th>Provincia</th>
+                <th>Pais</th>
+                <th>Foto</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for escuela in resultado %}
+
+        <tr>
+        <td> <a href="/escuelas/ver/{{escuela.slug}}/{{escuela.id}}">{{ escuela.nombre.capitalize }}</a> </td>
+        <td>{{ escuela.get_tipo }}</td>
+        <td>{{ escuela.nombre_provincia }}</td>
+        <td>{{ escuela.pais }}</td>
+        <td><img src="{{ escuela.foto.get_thumbnail_url }}" /></td>
+        </tr>
+        {% endfor %}
+        </tbody>
+    </div>
+</div>
+</table>
+{% endblock %}

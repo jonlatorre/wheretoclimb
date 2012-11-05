@@ -1,0 +1,35 @@
+{% extends "site_base.html"%}
+
+{% load i18n %}
+
+{% block title%}{% trans "Crags Map" %}{% endblock %}
+
+{% block extra_script %}
+    <!-- gmapi JS -->
+    {{ form.media.js }}
+    <script type="text/javascript" language="javascript">
+        //Para los markers del mapa
+        window.crags_map = {
+            viewInfo: function() {
+                console.log("Vamos a cerrar los demás infoWindows");
+                //Cerramos el resto de marcadores
+                jQuery.each($('[name="crags_map"]').getMarkers(), function(index, marker)
+                {
+                    console.log("Cerrando ... ",marker);
+                    marker.closeInfoWindow();
+                });
+                this.openInfoWindow();
+                },
+            markerOut: function() { this.closeInfoWindow(); },
+            getMarkers: function() {return this.getMarkers();}
+        };
+    </script>
+{% endblock %}
+
+{% block body %}
+<div class="row-fluid">
+    <div class="span12">
+                    {{ form.map }}
+    </div>
+</div>
+{% endblock %}
