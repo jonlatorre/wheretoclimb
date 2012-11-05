@@ -2,6 +2,7 @@
 {% block title%}Detalle de escuela {{ crag.nombre }}{% endblock %}
 {% block extra_script %}
 {{ form.media.js }}
+<script type="text/javascript" src="/site_media/static/js/bootbox.min.js"></script>
 <!--Para el +1 de google -->
 <script type="text/javascript" src="http://apis.google.com/js/plusone.js"></script>
 <!--Para el me gusta de facebook -->
@@ -25,38 +26,14 @@
             return false;
             }
         function view_sector(url,nombre) {
-            console.log("Vamos a ver los detalles del sector:");
-            console.log(url);
-            var $dialog = $('<div id="dialogsector"></div>')
-                .html('')
-                .dialog({
-                    autoOpen: false,
-                    title: 'Detalle sector '+nombre,
-                    modal: false
-                });
-            $dialog.dialog( "option", "minWidth", 700 );
-            $dialog.dialog( "option", "minHeight", 580 );
-            $dialog.dialog('open');
-            $dialog.load(url);
-            // prevent the default action, e.g., following a link
+            console.log("We are going to view "+nombre+" from the url: "+url);
+            $.get(url, function(data) {
+                bootbox.alert(data);
+                console.log('Load was performed.');
+            });
             return false;
         };
 
-        function nuevo_sector(id) {
-            console.log("Vamos a aladir un sector a "+id);
-            var $dialog = $('<div id="dialog"></div>')
-                .html('<iframe src ="/escuelas/sector/nuevo/'+id+'/" width="420" height="580" frameborder="0" ></iframe>')
-                .dialog({
-                    autoOpen: false,
-                    title: 'Nuevo sector',
-                    modal: true
-                });
-            $dialog.dialog( "option", "minWidth", 450 );
-            $dialog.dialog('open');
-            //$dialog.load('/escuelas/sector/nuevo/'+id+'/');
-            // prevent the default action, e.g., following a link
-            return false;
-        };
         function nuevo_proyecto() {
             var $dialogGroup = $('<div id="dialog"></div>')
                 .html('')
@@ -88,9 +65,9 @@
     </div>
     <div class="span8">
         <ul class="nav nav-tabs">
-            <li><a href="#home" data-toggle="tab">Datos generales</a></li>
-            <li><a href="#sectors" data-toggle="tab">Sectores</a></li>
-            <li><a href="#topos" data-toggle="tab">Croquis</a></li>
+            <li><a href="#home" data-toggle="tab">General</a></li>
+            <li><a href="#sectors" data-toggle="tab">Sectors</a></li>
+            <li><a href="#topos" data-toggle="tab">Topos</a></li>
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" id="home">
@@ -124,7 +101,7 @@
             </div>
         
             <div class="tab-pane" id="topos">
-                <h3>Croquis de {{ crag.nombre }}</h3>
+                <h3>Topos of {{ crag.nombre }}</h3>
                 {% if crag.topos.count %}
                 <table>
                 <tr>

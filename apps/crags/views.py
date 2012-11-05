@@ -64,7 +64,7 @@ def crags_crag_view(request, slug, id):
     form_sector = SectorForm()
     gmap = maps.Map(opts = {
         'id': 'detail_map',
-        'center': maps.LatLng(my_crag.location.coords[0], my_crag.location.coords[1]),
+        'center': maps.LatLng(my_crag.location.coords[1], my_crag.location.coords[0]),
         'mapTypeId': maps.MapTypeId.ROADMAP,
         'zoom': 10,
         'mapTypeControlOptions': {
@@ -73,7 +73,7 @@ def crags_crag_view(request, slug, id):
     })
     marker = maps.Marker(opts = {
         'map': gmap,
-        'position': maps.LatLng(my_crag.location.coords[0], my_crag.location.coords[1]),
+        'position': maps.LatLng(my_crag.location.coords[1], my_crag.location.coords[0]),
         'icon': climbing_icon_big ,
     })
     return render_to_response('crag_detail.html',{'crag': my_crag, 'form_crag': form_crag, \
@@ -96,7 +96,7 @@ def crags_map(request):
     for e in Crag.objects.all():
         marker = maps.Marker(opts = {
             'map': gmap,
-            'position': maps.LatLng(e.location.coords[0], e.location.coords[1]),
+            'position': maps.LatLng(e.location.coords[1], e.location.coords[0]),
             'icon': climbing_icon ,
         })
         maps.event.addListener(marker, 'click', 'crags_map.viewInfo')
@@ -111,7 +111,7 @@ def crags_map(request):
                     <img src="'+thumb_url+'" />\
                 </div>\
                 <div name="info_Crag" style="width:250px; height:75px; float:right;" > \
-                    Crag  de '+e.get_type()+': <a href="/Crags/ver/'+str(e.slug)+'/'+str(e.id)+'" > '+e.name+'</a>\
+                    Crag  de '+e.get_type()+': <a href="/crags/'+str(e.slug)+'/'+str(e.id)+'/" > '+e.name+'</a>\
                 </div>\
                 </div>'
         #if e.meteo and e.meteo.eltiempoes:
@@ -347,7 +347,7 @@ def crags_sector_view(request, slug, id):
         debug("No hemos encontrado el sector, tratamos de sacar su absolute_url")
         sector = get_object_or_404(Sector, id=id)
         return HttpResponsePermanentRedirect(sector.get_absolute_url())
-    return render_to_response('Crags/sector_detalle.html',{'sector': sector},RequestContext(request))
+    return render_to_response('sector_detail.html',{'sector': sector},RequestContext(request))
 
 def nuevo_croquis(request,id):
     """Recibimos el id de la Crag a la que queremos añadir el nuevo croquis"""

@@ -103,7 +103,7 @@ class Sector(models.Model):
         self.slug = defaultfilters.slugify(self.name)
         super(Sector, self).save(*args, **kwargs)
     def get_absolute_url(self):
-        return "/crags/sector/%s/%i" % (self.slug,self.id)
+        return "/crags/sector/%s/%i/" % (self.slug,self.id)
         
 class Route(models.Model):
     crag=models.ForeignKey(Crag,blank=True,null=True,related_name="routes")

@@ -1,9 +1,6 @@
-    <script type="text/javascript" src="/static/js/jquery-1.5.1.min.js"></script>
-    <link type="text/css" href="/static/css/smoothness/jquery-ui-1.8.12.custom.css" rel="Stylesheet" />
-    <script type="text/javascript" src="/static/js/jquery-ui-1.8.12.custom.min.js"></script>
-
+{% load i18n %}
     <script type="text/javascript" language="javascript">
-        function nueva_via(id) {
+        function new_route(id) {
             console.log("Vamos a añadir una via a "+id);
             var $dialog = $('<div id="dialogvia" ></div>')
                 .html('<iframe src ="/escuelas/via/nueva/'+id+'/" width="420" height="500" frameborder="0" ></iframe>')
@@ -41,7 +38,7 @@
         <h3>Description</h3>
         <p>{{sector.coment}}</p>
         <h3>Routes</h3>
-        <table name="vias">
+        <table name="routes_table" class="table">
         <thead>
             <tr>
                 <th>Name</th>

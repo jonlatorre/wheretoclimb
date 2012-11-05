@@ -38,7 +38,7 @@ class MapaDetalleForm(forms.Form):
         'name':'mapa_detalle', 'id':'mapa_detalle', 'class':'mapa_detalle', 'nojquery': True}))
 
 class MapaNuevaForm(forms.Form):
-    map = forms.Field(widget=GoogleMap(attrs={'width':580, 'height':500,
+    map = forms.Field(widget=GoogleMap(attrs={'width':420, 'height':420,
         'name':'mapa_nueva', 'id':'mapa_nueva', 'class':'mapa_nueva', 'nojquery': True}))
 
 
