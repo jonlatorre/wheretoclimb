@@ -3,13 +3,25 @@
 {% load metron_tags %}
 {% load i18n %}
 
+{% block extra_head_base %}
+
+{% endblock %}
+
 {% block nav %}
+    <ul class="nav">{% spaceless %}
+        <li class="dropdown" id="tab_crags">
+                <a class="dropdown-toggle" data-toggle="dropdown" href="#">{% trans "Crags" %}</a>
+            <ul class="dropdown-menu">
+                <li><a href="{% url crags_map %}">{% trans "Crags Map" %}</a></li>
+                <li><a href="{% url crags_list %}">{% trans "Crags list" %}</a></li>
+                <li><a href="{% url crags_crag_new %}">{% trans "Add crag" %}</a></li>
+            </ul>
+        </li>
     {% if user.is_authenticated %}
-        <ul class="nav">{% spaceless %}
             <li id="tab_profile"><a href="{% url profile_detail user.username %}">{% trans "Profile" %}</a></li>
             <li id="tab_notices"><a href="{% url notification_notices %}">{% trans "Notices" %}{% if notice_unseen_count %} ({{ notice_unseen_count }}){% endif %}</a></li>
-        {% endspaceless %}</ul>
     {% endif %}
+    {% endspaceless %}</ul>
 {% endblock %}
 
 {% block footer %}

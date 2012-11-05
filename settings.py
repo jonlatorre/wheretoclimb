@@ -28,8 +28,8 @@ MANAGERS = ADMINS
 
 DATABASES = {
     "default": {
-        "ENGINE": "django.db.backends.sqlite3", # Add "postgresql_psycopg2", "postgresql", "mysql", "sqlite3" or "oracle".
-        "NAME": "dev.db",                       # Or path to database file if using sqlite3.
+        "ENGINE": "django.contrib.gis.db.backends.mysql", # Add "postgresql_psycopg2", "postgresql", "mysql", "sqlite3" or "oracle".
+        "NAME": "wheretoclimb",                       # Or path to database file if using sqlite3.
         "USER": "",                             # Not used with sqlite3.
         "PASSWORD": "",                         # Not used with sqlite3.
         "HOST": "",                             # Set to empty string for localhost. Not used with sqlite3.
@@ -81,6 +81,7 @@ STATICFILES_FINDERS = [
     "staticfiles.finders.AppDirectoriesFinder",
     "staticfiles.finders.LegacyAppDirectoriesFinder",
     "compressor.finders.CompressorFinder",
+    'dajaxice.finders.DajaxiceFinder',
 ]
 
 # URL prefix for admin media -- CSS, JavaScript and images. Make sure to use a
@@ -98,6 +99,7 @@ SECRET_KEY = "^o@#0o32npyi-@g@fjrdk5bdq5hh4!4+o+o@#_*8&ae56etv*0"
 TEMPLATE_LOADERS = [
     "django.template.loaders.filesystem.load_template_source",
     "django.template.loaders.app_directories.load_template_source",
+    'django.template.loaders.eggs.Loader',
 ]
 
 MIDDLEWARE_CLASSES = [
@@ -110,7 +112,7 @@ MIDDLEWARE_CLASSES = [
     "pinax.apps.account.middleware.LocaleMiddleware",
     "pagination.middleware.PaginationMiddleware",
     "pinax.middleware.security.HideSensistiveFieldsMiddleware",
-    "debug_toolbar.middleware.DebugToolbarMiddleware",
+    #"debug_toolbar.middleware.DebugToolbarMiddleware",
 ]
 
 ROOT_URLCONF = "wheretoclimb.urls"
@@ -156,7 +158,7 @@ INSTALLED_APPS = [
     "notification", # must be first
     "staticfiles",
     "compressor",
-    "debug_toolbar",
+    #"debug_toolbar",
     "mailer",
     "django_openid",
     "timezones",
@@ -165,6 +167,9 @@ INSTALLED_APPS = [
     "pagination",
     "idios",
     "metron",
+    "gmapi",
+    "dajax",
+    "dajaxice",
     
     # Pinax
     "pinax.apps.account",
@@ -173,6 +178,9 @@ INSTALLED_APPS = [
     # project
     "about",
     "profiles",
+    "common",
+    "topos",
+    "crags",
 ]
 
 FIXTURE_DIRS = [

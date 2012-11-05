@@ -5,3 +5,8 @@
 
 # Put project-specific requirements here.
 # See http://pip-installer.org/requirement-format.html for more information.
+django-imagekit
+django-dajaxice
+django-dajax
+django_countries
+django-gmapi
