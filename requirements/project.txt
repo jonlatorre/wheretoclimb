@@ -1,3 +1,4 @@
+# Instalar python-mysql, libgeos,...
 # project.txt is a pip requirements file which describes the distributions
 # required by your project to run.
 
