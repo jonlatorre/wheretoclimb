@@ -4,7 +4,7 @@
         "model": "sites.site", 
         "fields": {
             "domain": "whetetoclimb.com", 
-            "name": "Whete To Climb"
+            "name": "Where To Climb"
         }
     }
 ]
