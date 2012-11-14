@@ -23,6 +23,11 @@
             markerOut: function() { this.closeInfoWindow(); },
             getMarkers: function() {return this.getMarkers();}
         };
+        $(window).bind("load resize", function(){
+            $('div[name="crags_map"]').children().width($('div[class="span12"]').width());
+            $('div[name="crags_map"]').children().height($('div[class="row-fluid"]').height());
+        });
+        
     </script>
 {% endblock %}
 
