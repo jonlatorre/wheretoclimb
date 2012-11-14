@@ -1,4 +1,7 @@
 {% extends "site_base.html"%}
+
+{% load i18n %}
+
 {% block title%}Detalle de escuela {{ crag.nombre }}{% endblock %}
 {% block extra_script %}
 {{ form.media.js }}
@@ -48,30 +51,34 @@
             return false;
         }
         
-	$(document).ready(function(){
-		$('#anadir_croquis').modal({
-		keyboard: false
-		});
-        $('#myTab a:last').tab('show');
-	});
+        $(document).ready(function(){
+            $('#anadir_croquis').modal({
+            keyboard: false
+            });
+            $('#myTab a:last').tab('show');
+        });
+        $(window).bind("load resize", function(){
+             $('div[class="gmap"]').children().width($('div[class="span4"]').width());
+        });
      </script>
 {% endblock %}
 
 {% block body %}
 <div class="row">
     <div class="span4">
-        {{ form.map }}
-        <button class="btn" name="nuevo_proyecto" id="nuevo_proyecto" onclick="nuevo_proyecto();">Añadir a mis proyectos</button>
+        {{ form.map }}        
     </div>
     <div class="span8">
         <ul class="nav nav-tabs">
-            <li><a href="#home" data-toggle="tab">General</a></li>
-            <li><a href="#sectors" data-toggle="tab">Sectors</a></li>
-            <li><a href="#topos" data-toggle="tab">Topos</a></li>
+            <li><a href="#home" data-toggle="tab">{% trans "Info" %}</a></li>
+            <li><a href="#sectors" data-toggle="tab">{% trans "Sectors" %}</a></li>
+            <li><a href="#topos" data-toggle="tab">{% trans "Topos" %}</a></li>
+            <li><button class="btn" name="nuevo_proyecto" id="nuevo_proyecto" onclick="nuevo_proyecto();">{% trans "Add to my projects" %}</button></li>
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" id="home">
-                <h3>{{ crag.name.capitalize }} is a {{ crag.get_type }} climbing crag located in {{crag.country}} </h3>
+                
+                <h3>{{ crag.name.capitalize }} is a {{ crag.get_type }} climbing crag located in {{crag.country}}</h3>
                 <p>{{ crag.description }}</p>
                 
                 <g:plusone></g:plusone>
