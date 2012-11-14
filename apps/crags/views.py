@@ -85,6 +85,7 @@ def crags_map(request):
     ##Creamos el mapa
     #provincia_form = ProvinciaForm()
     gmap = maps.Map(opts = {
+        'id': 'crags_map',
         'center': maps.LatLng(39.38, -3.93),
         'mapTypeId': maps.MapTypeId.ROADMAP,
         'zoom': 6,
@@ -106,7 +107,7 @@ def crags_map(request):
         else:
             thumb_url=""
 
-        contenido_info_window = '<div> \
+        info_window_content = '<div> \
                 <div name="foto_Crag" style="border:1px solid black; width:100px; height:75px; float:left;">\
                     <img src="'+thumb_url+'" />\
                 </div>\
@@ -114,10 +115,9 @@ def crags_map(request):
                     Crag  de '+e.get_type()+': <a href="/crags/'+str(e.slug)+'/'+str(e.id)+'/" > '+e.name+'</a>\
                 </div>\
                 </div>'
-        #if e.meteo and e.meteo.eltiempoes:
-        #    contenido_info_window +='<iframe src="'+e.meteo.eltiempoes.get_widget_url()+'"></iframe>'
+        
         info = maps.InfoWindow({
-            'content': contenido_info_window
+            'content': info_window_content
         })
         info.open(gmap, marker)
     context = {'form': CragsMapForm(initial={'map': gmap})}
