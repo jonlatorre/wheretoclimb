@@ -28,3 +28,4 @@ idios==0.2a1
 metron==0.1
 
 pinax-theme-bootstrap==2.0.1
+django_forms_bootstrap
