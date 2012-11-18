@@ -37,7 +37,7 @@ class MapaDetalleForm(forms.Form):
     map = forms.Field(widget=GoogleMap(attrs={'width':300, 'height':300,
         'name':'mapa_detalle', 'id':'mapa_detalle', 'class':'mapa_detalle', 'nojquery': True}))
 
-class MapaNuevaForm(forms.Form):
+class CragNewFormMap(forms.Form):
     map = forms.Field(widget=GoogleMap(attrs={'width':420, 'height':420,
         'name':'mapa_nueva', 'id':'mapa_nueva', 'class':'mapa_nueva', 'nojquery': True}))
 
@@ -53,7 +53,7 @@ class CragForm(ModelForm):
     lon = forms.FloatField(required=False)
     class Meta:
         model = Crag
-        exclude = ('slug','owner','photo','Topos','location')
+        exclude = ('slug','owner','photo','topos','location')
 
 class SectorForm(ModelForm):
     class Meta:

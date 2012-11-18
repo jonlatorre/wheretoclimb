@@ -42,11 +42,11 @@
                 .html('')
                 .dialog({
                     autoOpen: false,
-                    title: 'Nuevo proyecto',
+                    title: 'New project',
                     modal: true
                 });
             $dialogGroup.dialog('open');
-            $dialogGroup.load('/proyectos/nuevo/{{crag.id}}/');
+            $dialogGroup.load('/projetcs/new/{{crag.id}}/');
             // prevent the default action, e.g., following a link
             return false;
         }
@@ -93,7 +93,7 @@
             </div>
             
             <div class="tab-pane" id="sectors">
-                <h3>Sectors</h3>
+                <h3>{% trans "Sectors" %}</h3>
                 {%  if crag.sectors.count %}
                     <ul class="circle">
                     {% for sector in crag.sectors.all %}
@@ -108,7 +108,7 @@
             </div>
         
             <div class="tab-pane" id="topos">
-                <h3>Topos of {{ crag.nombre }}</h3>
+                <h3>{% trans "Topos of" %} {{ crag.nombre }}</h3>
                 {% if crag.topos.count %}
                 <table>
                 <tr>
@@ -130,21 +130,21 @@
         </div>
     </div>
 </div>
-<!-- Aqui estan las modales -->
 
+<!-- Modal Windows for adding sector and topos -->
 <div class="modal hide fade" id="new_sector_modal">
   <div class="modal-header">
     <a class="close" data-dismiss="modal">×</a>
-    <h3>New Sector</h3>
+    <h3>{% trans "New Sector" %}</h3>
   </div>
   <div class="modal-body">
-    <strong>Add a new sector to {{ crag.name }}</strong>
+    <strong>{% trans "Add a new sector to" %}{{ crag.name }}</strong>
     <form name="sector_form" enctype="multipart/form-data" action="{% url crags_sector_new crag.id%}" method="post">{% csrf_token %}
-    <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula, eget lacinia …</p>
+    <p>{% trans "Sector information" %}</p>
     {{ form_sector.as_p }}
   </div>
   <div class="modal-footer">
-    <a href="#" class="btn" data-dismiss="modal">Close</a>
+    <a href="#" class="btn" data-dismiss="modal">{% trans "Close" %}</a>
     <input  class="submit btn-form" type="submit" value="Add" />
   </div>
 </div>

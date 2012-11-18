@@ -1,5 +1,7 @@
 {% extends "site_base.html"%}
 
+{% load bootstrap_tags %}
+
 {% load i18n %}
 
 {% load dajaxice_templatetags %}
@@ -7,43 +9,40 @@
 {% block title%}{% trans "Add a new Crag" %}{% endblock %}
 
 {% block extra_script %}
-    {% dajaxice_js_import %}
+    
     {{ form.media.js }}
     {{ mapa.media.js }}
+    <script src="/site_media/static/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" language="javascript">
         $(document).ready(function() {
+
             console.log("Somos el init");
             geocoder = new google.maps.Geocoder();
-                $(function() {
+
                     console.log("Vamos con el autocomplete para address");
-                    $("#address").autocomplete({
-                    //This bit uses the geocoder to fetch address values
-                    source: function(request, response) {
-                        geocoder.geocode( {'address': request.term }, function(results, status) {
-                            response($.map(results, function(item) {
-                                return {
-                                    label:  item.formatted_address,
-                                    value: item.formatted_address,
-                                    latitude: item.geometry.location.lat(),
-                                    longitude: item.geometry.location.lng()
+                    $('#address').typeahead({
+                        source: function(typeahead, query) {
+                            var resultsArr = new Array();
+                              console.log("Invocamos el geocoder");
+                              geocoder.geocode({ 'address': query }, 
+                                function (results, status) {
+                                  console.log("comprobamos el status");
+                                  if (status == google.maps.GeocoderStatus.OK) {
+                                      console.log("Tenemos el status OK");
+                                    for(i=0; i < results.length; i++) {
+                                        if(results[i].formatted_address) {
+                                            resultsArr[i] = results[i].formatted_address;    
+                                      }
+                                  }
+                                typeahead.process(resultsArr);
                                 }
-                            }));
-                        })
-                    },
-                      //This bit is executed upon selection of an address
-                      select: function(event, ui) {
-                        $("#latitude").val(ui.item.latitude);
-                        $("#longitude").val(ui.item.longitude);
-                        var location = new google.maps.LatLng(ui.item.latitude, ui.item.longitude);
-                        marker = $("#map").getMarkers()[0];
-                        marker.setPosition(location);
-                        $("#map").fitMarkers(12);
-                        cambio_posicion(location);
-                        map.setCenter(location);
-                      }
+                          });
+
+                        },
+                        items: 10,
+                        minLength: 3,
                     });
             });
-        });
 
         function cambio_posicion(latLng)
         {
@@ -76,7 +75,6 @@
                 cambio_posicion(mouseEvent.latLng);
                 console.debug("Inputs cambiados");
             },
-
             createMarker: function(mouseEvent) {
 
                 console.debug("Creando nuevo marcador");
@@ -116,16 +114,15 @@
 {% block body %}
 <div class="row">
     <div class="span6">
-        <p><label>Buscar dirección: </label><input id="address"  type="text"/></p>
+<!--        <p><label>{% trans "Search location"%}</label><input id="address" data-provide="typeahead" type="text"/></p> -->
         {{ mapa.map }}
     </div>
     <div class="span6">
 
-        <form name="escuela_form" enctype="multipart/form-data" action="{% url crags_crag_new %}" method="post">{% csrf_token %}
-            <h3>Detalles de la nueva escuela:</h3>
-            <input type="hidden" id="municipio_id" name="municipio_id" /><input type="hidden" id="loc_id" name="loc_id"/><br />
-            {{ form_crag.as_p }}
-            {{ form_photo.as_p }}
+        <form name="crag_form" enctype="multipart/form-data" action="{% url crags_crag_new %}" method="post">{% csrf_token %}
+            <h3>{% trans "New Crag" %}</h3>
+            {{ form_crag|as_bootstrap }}
+            {{ form_photo|as_bootstrap }}
             <br />
             <input  class="submit btn-form" type="submit" value="Submit" />
         </form>

@@ -2,14 +2,14 @@
 # -*- coding: utf-8 -*-
 
 ### BEGIN LICENSE
-#    This file is part of DondeEscalar.
+#    This file is part of Where To Climb.
 
-#    DondeEscalar is free software: you can redistribute it and/or modify
+#    Where To Climb is free software: you can redistribute it and/or modify
 #    it under the terms of the GNU General Public License as published by
 #    the Free Software Foundation, either version 3 of the License, or
 #    (at your option) any later version.
 
-#    DondeEscalar is distributed in the hope that it will be useful,
+#    Where To Climb is distributed in the hope that it will be useful,
 #    but WITHOUT ANY WARRANTY; without even the implied warranty of
 #    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 #    GNU General Public License for more details.
@@ -17,17 +17,16 @@
 #    You should have received a copy of the GNU General Public License
 #    along with DondeEscalar.  If not, see <http://www.gnu.org/licenses/>.
 ### END LICENSE
-
 from django.http import HttpResponse, HttpResponseNotFound, HttpResponsePermanentRedirect
 from django.shortcuts import render_to_response, get_object_or_404, redirect
 from django.template import RequestContext
 from django.contrib.gis.geos import Point
 from django.views.generic import DetailView, ListView, CreateView, UpdateView
-
-#Modelos
+from django.utils.translation import ugettext as _
+from django.contrib import messages
+#import simplejson
+#Models
 from models import *
-#from common.models import Municipio
-#from eltiempo.models import *
 from common.models import *
 from topos.models import *
 #Forms
@@ -35,24 +34,25 @@ from forms import *
 from gmapi import maps
 from django.contrib.localflavor.es.forms import *
 
+#Logging
 import logging
-import simplejson
 l = logging.getLogger()
+handler = logging.FileHandler('/tmp/wtc.log')
+l.addHandler(handler)
 debug = l.debug
+
 climbing_icon = '/site_media/static/icons/climbdroid_ico.png'
 #climbing_icon_big = '/site_media/static/icons/climbdroid_ico_big.png'
 climbing_icon_big=climbing_icon
+
 
 class CragListView(ListView):
     model = Crag
     context_object_name = "crag_list"
     template_name = "crag_list.html"
 
-def lista_provincia(request, id):
-    lista_Crags = Crag.objects.filter(provincia=id)
-    return render_to_response('lista.html',{'Crags': lista_Crags,'tipo':'provincia'},RequestContext(request))
-
 def crags_crag_view(request, slug, id):
+    debug("Where are in the crag detail view")
     try:
         my_crag = Crag.objects.get(slug=slug, id=id)
     #except ObjectDoesNotExist:
@@ -165,42 +165,32 @@ def crags_crag_edit(request,id):
         return render_to_response('editar.html', context, context_instance=RequestContext(request))
 
 def crags_crag_new(request):
-    form_crag = CragForm(initial={'lat': 39.38,'lon': -3.93, 'climbing_type': 0, 'valoracion': 1, \
-        'description': "Add here a description of the Crag."})
-    if request.method == 'POST': # If the form has been submitted...
-        form = CragForm(request.POST) # A form bound to the POST data
+    if request.method == 'POST': 
+        form_crag = CragForm(request.POST) 
         form_photo = PhotoForm(request.POST, request.FILES)
-        if form.is_valid(): # All validation rules pass
-            # Process the data in form.cleaned_data
-            #municipio_id = request.POST['municipio_id']
-            ##Creamos el objecto punto gis con los campos del form
-            location = Point(form.cleaned_data['lon'], form.cleaned_data['lat'])
-
-            Crag = form.save(commit=False)
+        if form_crag.is_valid():
+            location = Point(form_crag.cleaned_data['lon'], form_crag.cleaned_data['lat'])
+            Crag = form_crag.save(commit=False)
             Crag.location = location
             Crag.save()
-            
             if form_photo.is_valid():
-                debug("Guardamos la foto")
                 photo = form_photo.save()
-                debug("Ponemos normbre y guardamos la foto")
                 photo.name = "foto_Crag_"+str(Crag.id)+"_"+Crag.nombre
             else:
-                debug("pues no hay foto, habrá que añadir la generica")
                 photo = Photo.objects.get(name="nofoto")
-            debug("Añadidos la foto a la Crag")
             Crag.photo = photo
-            debug("Guardamos la Crag otra vez")
             Crag.save()
             if request.user.is_authenticated():
-                debug("Crag creada por %s"%request.user)
                 Crag.owner = request.user
                 Crag.save()
+            messages.add_message(request, messages.INFO,  _("Thanks for adding the crag")+Crag.name)
             return redirect("/crags")
             #return render_to_response('/Crags/mapa.html',{'mensaje': "Graciás por añadirla Crag."})
         else:
+            lon = form['lon'].value()
+            lat = form['lat'].value()
             gmap = maps.Map(opts = {
-                'center': maps.LatLng(form.data['lat'], form.data['lon']),
+                'center': maps.LatLng(lat, lon),
                 'mapTypeId': maps.MapTypeId.ROADMAP,
                 'zoom': 6,
                 'mapTypeControlOptions': {
@@ -208,32 +198,32 @@ def crags_crag_new(request):
                 },
             })
             marker = maps.Marker(opts = {
-                    'map': gmap,
-                    'position': maps.LatLng(form.data['lat'], form.data['lon']),
-                    'draggable': True,
-                    'title': "Nueva Crag",
-                })
-
-            context = {'form_Crag': form,
+                'map': gmap,
+                'position': maps.LatLng(lat, lon),
+                'draggable': True,
+                'title': "New Crag",
+            })
+            context = {'form_crag': form_crag,
                 'form_photo': form_photo,
-                'mapa': MapaDetalleForm(initial={'map': gmap})}
-            return render_to_response('detalle.html',{'Crag': Crag, \
-                'form': MapaDetalleForm(initial={'map': gmap}),\
-                'mensaje': "Gracias por editar la Crag"},RequestContext(request))
+                'mapa': CragNewFormMap(initial={'map': gmap})}
+            template = 'crag_new.html'
+            return render_to_response(template, context, context_instance=RequestContext(request))
     ##Si no es post....
     else:
+        form_crag = CragForm(initial={'lat': 43.20,'lon': -2.92, 'climbing_type': 1, \
+            'valoracion': 1, 'description': "Add here a description of the Crag."})
         form_photo = PhotoForm()
         gmap = maps.Map(opts = {
-            'center': maps.LatLng(39.38, -3.93),
+            'center': maps.LatLng(43.20, -2.92),
             'mapTypeId': maps.MapTypeId.ROADMAP,
-            'zoom': 6,
+            'zoom': 4,
             'mapTypeControlOptions': {
                  'style': maps.MapTypeControlStyle.DROPDOWN_MENU
             },
         })
         marker = maps.Marker(opts = {
             'map': gmap,
-            'position': maps.LatLng(39.38, -3.93),
+            'position': maps.LatLng(43.20, -2.92),
             'draggable': True,
             'title': "New Crag",
         })
@@ -242,7 +232,7 @@ def crags_crag_new(request):
         #maps.event.addListener(gmap, 'click', 'Crag.crearMarcador')
         context = {'form_crag': form_crag,
             'form_photo': form_photo,
-            'mapa': MapaNuevaForm(initial={'map': gmap})}
+            'mapa': CragNewFormMap(initial={'map': gmap})}
         template = 'crag_new.html'
         return render_to_response(template, context, context_instance=RequestContext(request))
 
@@ -319,10 +309,7 @@ def crags_sector_new(request,id):
             sector.photo = photo
             debug("Guardamos el sector")
             sector.save()
-            #return render_to_response('/Crags/gracias.html',{'elemento':sector})
             return redirect(selected_crag.get_absolute_url())
-            #return render_to_response('close_dialog.html',{'mensaje': "Gracias por añadir el sector",
-            #    "destino": "%s#detalle"%Crag.get_absolute_url(),'dialogo':'dialogcroquis'})
         else:
             context = {'form_sector': form,
             'form_photo': form_photo,
@@ -330,6 +317,7 @@ def crags_sector_new(request,id):
         return render_to_response(template, context, context_instance=RequestContext(request))
     ##Si no es post....
     else:
+        debug("Vamos a mandar el formulario..")
         form_sector = SectorForm(initial={'crag':selected_crag})
         form_photo = PhotoForm()
         context = {'form_sector': form_sector,

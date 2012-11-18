@@ -28,6 +28,7 @@ urlpatterns = patterns("",
     url(r"^notices/", include("notification.urls")),
     url(r"^announcements/", include("announcements.urls")),
     url(r'^crags/', include('crags.urls')),
+    url(r'^topos/', include('topos.urls')),
     #for the maps with gmapi
     url(r'', include('gmapi.urls.media')),
 )
