@@ -292,7 +292,7 @@ def crags_route_view(request, slug, id):
 def crags_sector_new(request,id):
     """Recibimos el id de la Crag a la que queremos añadir el nuevo sector"""
     selected_crag = Crag.objects.get(id=id)
-    template = 'sector_nuevo.html'
+    template = 'sector_new.html'
     if request.method == 'POST': # If the form has been submitted...
         form = SectorForm(request.POST) # A form bound to the POST data
         form_photo = PhotoForm(request.POST, request.FILES)
@@ -317,7 +317,7 @@ def crags_sector_new(request,id):
         return render_to_response(template, context, context_instance=RequestContext(request))
     ##Si no es post....
     else:
-        debug("Vamos a mandar el formulario..")
+        
         form_sector = SectorForm(initial={'crag':selected_crag})
         form_photo = PhotoForm()
         context = {'form_sector': form_sector,

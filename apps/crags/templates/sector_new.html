@@ -1,5 +1,7 @@
 {% extends "site_base.html"%}
 
+{% load bootstrap_tags %}
+
 {% load i18n %}
 
 {% block body %}
@@ -8,8 +10,8 @@
 
     <form name="sector_form" enctype="multipart/form-data" action="{% url crags_sector_new crag.id %}" method="post">{% csrf_token %}
     <h3>Detalles:</h3>
-    {{ form_sector.as_p }}
-    {{ form_foto.as_p }}
+    {{ form_sector|as_bootstrap }}
+    {{ form_foto|as_bootstrap}}
     <input class="submit btn-form" type="submit" value="enviar" />
     
 

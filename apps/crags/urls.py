@@ -29,9 +29,8 @@ info_dict = {
 
 # Uncomment the next two lines to enable the admin:
 urlpatterns = patterns('',
-    # Example:
-    url(r'sector/(?P<slug>[-\w]+)/(?P<id>\d+)/$', crags_sector_view),
     url(r'sector/new/(?P<id>\d+)/$', crags_sector_new, name="crags_sector_new"),
+    url(r'sector/(?P<slug>[-\w]+)/(?P<id>\d+)/$', crags_sector_view),
     #(r'topo/new/(?P<id>\d+)/$', topo_new),
     url(r'list/$', CragListView.as_view(), name="crags_list"),
     #(r'provincia/(?P<id>\d+)/$', lista_provincia),
