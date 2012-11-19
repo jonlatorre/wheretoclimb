@@ -1,5 +1,5 @@
 {% extends "site_base.html"%}
-
+{% load bootstrap_tags %}
 {% load i18n %}
 
 {% block title%}Detalle de escuela {{ crag.nombre }}{% endblock %}
@@ -108,8 +108,8 @@
             </div>
         
             <div class="tab-pane" id="topos">
-                <h3>{% trans "Topos of" %} {{ crag.nombre }}</h3>
-                {% if crag.topos.count %}
+                <h3>{% trans "Topos of" %} {{ crag.nnme }}</h3>
+                {% if crag.topos.count != 0 %}
                 <table>
                 <tr>
                 {% for croquis in crag.topos.all %}
@@ -139,28 +139,30 @@
   </div>
   <div class="modal-body">
     <strong>{% trans "Add a new sector to" %}{{ crag.name }}</strong>
-    <form name="sector_form" enctype="multipart/form-data" action="{% url crags_sector_new crag.id%}" method="post">{% csrf_token %}
+    <form class="form-horizontal" name="sector_form" enctype="multipart/form-data" action="{% url crags_sector_new crag.id%}" method="post">{% csrf_token %}
     <p>{% trans "Sector information" %}</p>
-    {{ form_sector.as_p }}
+    {{ form_sector|as_bootstrap }}
   </div>
   <div class="modal-footer">
     <a href="#" class="btn" data-dismiss="modal">{% trans "Close" %}</a>
     <input  class="submit btn-form" type="submit" value="Add" />
+    </form>
   </div>
 </div>
 
 <div class="modal hide fade" id="new_topo_modal">
   <div class="modal-header">
     <a class="close" data-dismiss="modal">×</a>
-    <h3>New Todo</h3>
+    <h3>{% trans "New Topo" %}</h3>
   </div>
   <div class="modal-body">
     <strong>Add a new topo to {{ crag.name }}</strong>
-    {{ form_topo.as_p }}
+    <form class="form-horizontal" name="topo_form" enctype="multipart/form-data" action="{% url crags_topo_new crag.id%}" method="post">{% csrf_token %}
+    {{ form_topo|as_bootstrap }}
   </div>
   <div class="modal-footer">
-    <a href="#" class="btn" data-dismiss="modal">Close</a>
-    <a href="#" class="btn btn-primary">Add</a>
+    <input  class="submit btn-form" type="submit" value="Add" />
+    </form>
   </div>
 </div>
 

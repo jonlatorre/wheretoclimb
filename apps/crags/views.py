@@ -296,28 +296,22 @@ def crags_sector_new(request,id):
     if request.method == 'POST': # If the form has been submitted...
         form = SectorForm(request.POST) # A form bound to the POST data
         form_photo = PhotoForm(request.POST, request.FILES)
-        if form.is_valid(): # All validation rules pass
-            # Process the data in form.cleaned_data
+        if form.is_valid():
             sector = form.save()
             if form_photo.is_valid():
                 photo = form_photo.save()
-                photo.name = "photo_sector_"+selected_crag.id+"_"+selected_crag.nombre
+                photo.name = "photo_sector_"+str(selected_crag.id)+"_"+selected_crag.name
             else:
-                debug("pues no hay foto, habrá que añadir la generica")
                 photo = Photo.objects.get(name="nofoto")
-            debug("Añadidos la foto al sector")
             sector.photo = photo
-            debug("Guardamos el sector")
             sector.save()
             return redirect(selected_crag.get_absolute_url())
         else:
             context = {'form_sector': form,
-            'form_photo': form_photo,
-            'crag': selected_crag}
-        return render_to_response(template, context, context_instance=RequestContext(request))
-    ##Si no es post....
+                'form_photo': form_photo,
+                'crag': selected_crag}
+            return render_to_response(template, context, context_instance=RequestContext(request))
     else:
-        
         form_sector = SectorForm(initial={'crag':selected_crag})
         form_photo = PhotoForm()
         context = {'form_sector': form_sector,
@@ -337,35 +331,30 @@ def crags_sector_view(request, slug, id):
         return HttpResponsePermanentRedirect(sector.get_absolute_url())
     return render_to_response('sector_detail.html',{'sector': sector},RequestContext(request))
 
-def nuevo_croquis(request,id):
+def crags_topo_new(request,id):
     """Recibimos el id de la Crag a la que queremos añadir el nuevo croquis"""
-    Crag = Crag.objects.get(id=id)
-    template = 'croquis_nuevo.html'
+    selected_crag = Crag.objects.get(id=id)
+    template = 'topo_new.html'
+    form = TopoForm(request.POST, request.FILES) # Creamos el form con los datos POST y el fichero
     if request.method == 'POST': # If the form has been submitted...
         debug("Nos quieren subir un croquis")
-        form = CroquisForm(request.POST, request.FILES) # Creamos el form con los datos POST y el fichero
         if form.is_valid(): # All validation rules pass
             debug("Todos los campos OK. Vamos a guardarlo")
             # Process the data in form.cleaned_data
             croquis = form.save()
             debug("Despues de guardar el croquis lo añadimos a la Crag")
-            Crag.croquises.add(croquis)
+            selected_crag.topos.add(croquis)
             #return render_to_response('/Crags/gracias.html',{'elemento':croquis})
-            #return redirect(Crag.get_absolute_url())
-            return render_to_response('close_dialog.html',{'mensaje': "Gracias por añadir el croquis",
-                "destino": "%s#croquis"%Crag.get_absolute_url(),'dialogo':'dialogcroquis'})
+            return redirect(selected_crag.get_absolute_url())
         else:
-            debug("Algun campo no esta bien :(")
-            debug(form.errors)
             context = {'form': form,
-            'Crag': Crag}
+            'crag': selected_crag}
             return render_to_response(template, context, context_instance=RequestContext(request))
 
     ##Si no es post....
     else:
-        form = CroquisForm(initial={'Crag':Crag})
         context = {'form': form,
-            'Crag': Crag}
+            'crag': selected_crag}
         return render_to_response(template, context, context_instance=RequestContext(request))
 
 def crags_find(self,request):

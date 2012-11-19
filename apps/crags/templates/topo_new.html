@@ -1,0 +1,13 @@
+{% extends "site_base.html"%}{% load i18n %}
+{% load bootstrap_tags %}
+{% load i18n %}
+{% block body %}
+<h3>Añadiendo un croquis a la escuela {{crag.name}}</h3>
+<div id="stylized-form">
+    <form name="form" enctype="multipart/form-data" action="{% url crags_topo_new crag.id %}" method="post">{% csrf_token %}
+    <h3>Detalles:</h3>
+    {{ form|as_bootstrap }}
+    <input class="submit btn-form" type="submit" value="Submit" />
+    <!-- <p><input value="Send" onclick="send_form();" type="button"></p> -->
+</div>
+{% endblock %}
