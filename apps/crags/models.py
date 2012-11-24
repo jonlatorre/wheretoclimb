@@ -42,13 +42,13 @@ VALORACION = (
     (4, 'Visita obligada'),
 )
 CLIMBING_TYPE = (
-    (1, 'Sport Climbing'),
-    (2, 'Multipitch Climbing'),
-    (3, 'Trad Climbing'),
-    (4, 'Ice Climbing'),
-    (5, 'Deep Water Soloing'),
-    (6, 'Mountaenering'),
-    (7, 'Rocodromo'),
+    (0, 'Sport Climbing'),
+    (1, 'Multipitch Climbing'),
+    (2, 'Trad Climbing'),
+    (3, 'Ice Climbing'),
+    (4, 'Deep Water Soloing'),
+    (5, 'Mountaenering'),
+    (6, 'Rocodromo'),
 )
 
 class Grade(models.Model):

@@ -80,8 +80,8 @@ def crags_crag_view(request, slug, id):
         'form': MapaDetalleForm(initial={'map': gmap}), 'form_sector': SectorForm(initial={'crag':my_crag}) ,'form_topo': TopoForm },\
         RequestContext(request))
 
-def crags_map(request):
-    print request
+def crags_map(request, country=None):
+    print country
     ##Creamos el mapa
     #provincia_form = ProvinciaForm()
     gmap = maps.Map(opts = {
@@ -94,7 +94,12 @@ def crags_map(request):
         },
     })
     ##Listamos las Crags y creamos los marcadores
-    for e in Crag.objects.all():
+    if country:
+        print "We'll list only the crags in %s"%country
+        crag_list = Crag.objects.filter(country__icontains=country)
+    else:
+        crag_list = Crag.objects.all()
+    for e in crag_list:
         marker = maps.Marker(opts = {
             'map': gmap,
             'position': maps.LatLng(e.location.coords[1], e.location.coords[0]),
