@@ -9,10 +9,6 @@
 {% block title%}{% trans "Add a new Crag" %}{% endblock %}
 
 {% block extra_script %}
-    
-    {{ form.media.js }}
-    {{ mapa.media.js }}
-    <script src="/site_media/static/bootstrap/js/bootstrap.min.js"></script>
     <script type="text/javascript" language="javascript">
         $(document).ready(function() {
 
@@ -44,59 +40,32 @@
                     });
             });
 
-        function cambio_posicion(latLng)
+        function crag_move(position)
         {
-            console.log("Cambiemos los inputs!");
+            latLng = position.latLng;
             $("input[name*=lat]").val(latLng.lat());
             $("input[name*=lon]").val(latLng.lng());
-            console.log("Vamos con el geocoding...");
             geocoder = new google.maps.Geocoder();
             //alert(geocoder);
             geocoder.geocode( { 'location': latLng }, function(results, status) {
                 console.log("Hemos pedido un geocoding, a ver como nos va!");
                 if (status == google.maps.GeocoderStatus.OK) {
-                    pueblo = results[0].address_components[1].long_name
-                    provincia = results[0].address_components[2].long_name;
-                    console.log("Tenemos el pueblo "+pueblo+" en la provincia "+provincia+" . Vamos a pedir el ID por AJAX");
+                    //We look for the country
+                    for (var i=0; i<results[0].address_components.length; i++) {
+                     item = results[0].address_components[i]
+                        console.log(item.types);
+                        if (item.types[0] == "country") {
+                            console.log("The country is: "+item.long_name);
+                            country_code = item.short_name;
+                            $("select[name*=country]").val(country_code);
+                            break;
+                        }
+                    }
                     //Dajaxice.common.get_municipio_code(set_municipio,{'nombre': pueblo})
-                    $("option:contains("+provincia+")").attr('selected','selected');
-
                 } else {
                     alert("Geocode was not successful for the following reason: " + status);
                 }
             });
-        };
-
-        window.crag = {
-            drag: function(mouseEvent) {
-                console.debug("Somos unos arrastrados");
-                console.debug("Hemos llegado a "+mouseEvent.latLng.lat()+" "+mouseEvent.latLng.lng());
-                console.debug("Fin de todo el JS tras arrastrar");
-                cambio_posicion(mouseEvent.latLng);
-                console.debug("Inputs cambiados");
-            },
-            createMarker: function(mouseEvent) {
-
-                console.debug("Creando nuevo marcador");
-                console.debug("Estamos en "+mouseEvent.latLng.lat()+" "+mouseEvent.latLng.lng());
-                var mapOptions = {
-                    zoom: 12,
-                    center: mouseEvent.latLng,
-                    mapTypeId: google.maps.MapTypeId.ROADMAP
-                };
-
-                var map = new google.maps.Map(document.getElementById("map"),
-                    mapOptions);
-                alert(map);
-                var marker = new google.maps.Marker({
-                    position: mouseEvent.latLng,
-                    map: {{ mapa.map }},
-                    title:"Nueva escuela!"});
-                console.debug("Añadido marcador!");
-                $("input[name*=lat]").val(mouseEvent.latLng.lat());
-                $("input[name*=lon]").val(mouseEvent.latLng.lng());
-                console.debug("Inputs cambiados");
-            }
         };
         function send_form(){
             console.log("Vamos a enviar el form");
@@ -109,6 +78,9 @@
             Dajaxice.escuelas.send_escuela_form(Dajax.process,{'form':data});
         };
     </script>
+    {{ form.media.js }}
+    {{ mapa.media.js }}
+    
 {% endblock %}
 
 {% block body %}

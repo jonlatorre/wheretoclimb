@@ -211,7 +211,7 @@ def crags_crag_new(request):
     ##Si no es post....
     else:
         form_crag = CragForm(initial={'lat': 43.20,'lon': -2.92, 'climbing_type': 1, \
-            'valoracion': 1, 'description': "Add here a description of the Crag."})
+            'rate': 1, 'description': "Add here a description of the Crag."})
         form_photo = PhotoForm()
         gmap = maps.Map(opts = {
             'center': maps.LatLng(43.20, -2.92),
@@ -228,7 +228,7 @@ def crags_crag_new(request):
             'title': "New Crag",
         })
 
-        maps.event.addListener(marker, 'dragend', 'crag.drag')
+        maps.event.addListener(marker, 'dragend', 'crag_move')
         #maps.event.addListener(gmap, 'click', 'Crag.crearMarcador')
         context = {'form_crag': form_crag,
             'form_photo': form_photo,
