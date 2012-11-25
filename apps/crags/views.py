@@ -81,9 +81,6 @@ def crags_crag_view(request, slug, id):
         RequestContext(request))
 
 def crags_map(request, country=None):
-    print country
-    ##Creamos el mapa
-    #provincia_form = ProvinciaForm()
     gmap = maps.Map(opts = {
         'id': 'crags_map',
         'center': maps.LatLng(39.38, -3.93),
@@ -93,9 +90,7 @@ def crags_map(request, country=None):
              'style': maps.MapTypeControlStyle.DROPDOWN_MENU
         },
     })
-    ##Listamos las Crags y creamos los marcadores
     if country:
-        print "We'll list only the crags in %s"%country
         crag_list = Crag.objects.filter(country__icontains=country)
     else:
         crag_list = Crag.objects.all()
@@ -106,7 +101,6 @@ def crags_map(request, country=None):
             'icon': climbing_icon ,
         })
         maps.event.addListener(marker, 'click', 'crags_map.viewInfo')
-        #maps.event.addListener(marker, 'mouseout', 'myobj.markerOut')
         if e.photo:
             thumb_url = e.photo.thumbnail_image.url
         else:
@@ -126,10 +120,6 @@ def crags_map(request, country=None):
         })
         info.open(gmap, marker)
     context = {'form': CragsMapForm(initial={'map': gmap})}
-    #if request.mobile:
-    #    template = 'mobile_mapa.html'
-    #else:
-    #    template = 'mapa.html'
     template = 'crags_map.html'
     return render_to_response(template, context,RequestContext(request))
 
@@ -149,7 +139,6 @@ def crags_crag_edit(request,id):
         'position': maps.LatLng(Crag.lat, Crag.lon),
         'draggable': True,
     })
-    #maps.event.addListener(marker, 'mouseover', 'myobj.markerOver')
     maps.event.addListener(marker, 'dragend', 'Crag.arrastrar')
     if request.method == 'POST': # If the form has been submitted...
         form = CragForm(request.POST,instance=Crag) # A form bound to the POST data
