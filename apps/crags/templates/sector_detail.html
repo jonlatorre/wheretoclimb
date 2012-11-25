@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load pagination_tags %}
     <script type="text/javascript" language="javascript">
         function new_route(id) {
             console.log("Vamos a añadir una via a "+id);
@@ -37,27 +38,34 @@
     <div id="entry">
         <h3>Description</h3>
         <p>{{sector.coment}}</p>
+        
         <h3>Routes</h3>
+        {%  if routes.count %}
+        
         <table name="routes_table" class="table">
-        <thead>
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Type</th>
+                    <th>Grade</th>
+                    <th>Long.</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for route in routes %}
             <tr>
-                <th>Name</th>
-                <th>Tipe</th>
-                <th>Grade</th>
-                <th>Long.</th>
+            <td> <a href="#" onclick='#'>{{ route.name.capitalize }}</a> </td>
+            <td>{{ route.get_type }}</td>
+            <td>{{ route.grade.name }}</td>
+            <td>{{ route.longitude }}</td>
             </tr>
-        </thead>
-        <tbody>
-        {% for route in sector.routes.all %}
-        <tr>
-        <td> <a href="#" onclick='ver_via("{{ via.get_absolute_url }}","{{ via.slug }}")'>{{ via.nombre.capitalize }}</a> </td>
-        <td>{{ via.get_tipo }}</td>
-        <td>{{ via.grado.nombre }}</td>
-        <td>{{ via.metros }}</td>
-        </tr>
-        {% endfor %}
-        </tbody>
-        <br />
+            {% endfor %}
+            </tbody>
+        </table>
+        
+        
+        
+        {% endif %}
         <button name="nueva_via" id="nueva_via" onclick="nueva_via({{sector.id}});">Añadir via</button>
     </div>
     <!--

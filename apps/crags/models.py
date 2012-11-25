@@ -116,9 +116,9 @@ class Route(models.Model):
     climbing_type = models.DecimalField(max_digits=2, decimal_places=0,choices=CLIMBING_TYPE)
     #estilo = models.CharField(max_length=50)
     longitude = models.DecimalField(decimal_places=0,max_digits=4,blank=True,null=True)
-#    material = models.CharField(max_length=50,blank=True,null=True)
-#    largos=models.DecimalField(decimal_places=0,max_digits=4,null=True,default=1)
-#    comentario=models.TextField(blank=True,null=True)
+    gear = models.CharField(max_length=50,blank=True,null=True)
+    pitches=models.DecimalField(decimal_places=0,max_digits=4,null=True,default=1)
+    comment=models.TextField(blank=True,null=True)
 #    pegues = models.CharField(max_length=200)
     slug = models.SlugField(blank=True,null=True)
     pub_date = models.DateTimeField('date published',auto_now_add=True)
@@ -131,7 +131,7 @@ class Route(models.Model):
     ##Métodos
     def save(self, *args, **kwargs):
         self.slug = defaultfilters.slugify(self.name)
-        super(Via, self).save(*args, **kwargs)
+        super(Route, self).save(*args, **kwargs)
     def get_absolute_url(self):
         return "/crags/route/%s/%i" % (self.slug,self.id)
     def get_type(self):

@@ -323,7 +323,7 @@ def crags_sector_view(request, slug, id):
         debug("No hemos encontrado el sector, tratamos de sacar su absolute_url")
         sector = get_object_or_404(Sector, id=id)
         return HttpResponsePermanentRedirect(sector.get_absolute_url())
-    return render_to_response('sector_detail.html',{'sector': sector},RequestContext(request))
+    return render_to_response('sector_detail.html',{'sector': sector, 'routes': sector.routes.all()},RequestContext(request))
 
 def crags_topo_new(request,id):
     """Recibimos el id de la Crag a la que queremos añadir el nuevo croquis"""
