@@ -23,6 +23,7 @@ from django.contrib.gis.db import models
 from django.contrib import admin
 from django.template import defaultfilters
 from django.contrib.auth.models import User
+from django.utils.translation import ugettext as _
 ##Paises y provincias
 from django_countries import CountryField
 from django_countries.countries import COUNTRIES
@@ -36,19 +37,19 @@ import json
 
 # Create your models here.
 VALORACION = (
-    (1, 'Interes local'),
-    (2, 'Merece una visita'),
-    (3, 'Buena'),
-    (4, 'Visita obligada'),
+    (1, _('Local intereset')),
+    (2, _('It deservs a visit')),
+    (3, _('Good')),
+    (4, _('A must see')),
 )
 CLIMBING_TYPE = (
-    (0, 'Sport Climbing'),
-    (1, 'Multipitch Climbing'),
-    (2, 'Trad Climbing'),
-    (3, 'Ice Climbing'),
-    (4, 'Deep Water Soloing'),
-    (5, 'Mountaenering'),
-    (6, 'Rocodromo'),
+    (0, _('Sport Climbing')),
+    (1, _('Multipitch Climbing')),
+    (2, _('Trad Climbing')),
+    (3, _('Ice Climbing')),
+    (4, _('Deep Water Soloing')),
+    (5, _('Mountaenering')),
+    (6, _('Indoor Climbing')),
 )
 
 class Grade(models.Model):

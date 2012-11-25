@@ -84,7 +84,7 @@ def crags_map(request, country=None):
     gmap = maps.Map(opts = {
         'id': 'crags_map',
         'center': maps.LatLng(39.38, -3.93),
-        'mapTypeId': maps.MapTypeId.ROADMAP,
+        'mapTypeId': maps.MapTypeId.TERRAIN,
         'zoom': 6,
         'mapTypeControlOptions': {
              'style': maps.MapTypeControlStyle.DROPDOWN_MENU
