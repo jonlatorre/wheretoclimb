@@ -38,7 +38,7 @@ class Command(BaseCommand):
                     try:
                         gps_lat,gps_lon = gps[2],gps[3],
                     except TypeError:
-                        print "No tenemos posicion GPS de la escuela %s :("%crag_name
+                        print "No tenemos posicion GPS de la via %s con id %s :("%(route_name,route_id)
                         break
 
                     try:

@@ -8,24 +8,196 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2010-07-28 23:55+0200\n"
+"POT-Creation-Date: 2012-11-26 04:12-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms:  nplurals=2; plural=(n != 1);\n"
 
+#: apps/crags/models.py:40
+msgid "Local intereset"
+msgstr ""
+
+#: apps/crags/models.py:41
+msgid "It deservs a visit"
+msgstr ""
+
+#: apps/crags/models.py:42
+msgid "Good"
+msgstr ""
+
+#: apps/crags/models.py:43
+msgid "A must see"
+msgstr ""
+
+#: apps/crags/models.py:46
+msgid "Sport Climbing"
+msgstr ""
+
+#: apps/crags/models.py:47
+msgid "Multipitch Climbing"
+msgstr ""
+
+#: apps/crags/models.py:48
+msgid "Trad Climbing"
+msgstr ""
+
+#: apps/crags/models.py:49
+msgid "Ice Climbing"
+msgstr ""
+
+#: apps/crags/models.py:50
+msgid "Deep Water Soloing"
+msgstr ""
+
+#: apps/crags/models.py:51
+msgid "Mountaenering"
+msgstr ""
+
+#: apps/crags/models.py:52
+msgid "Indoor Climbing"
+msgstr ""
+
+#: apps/crags/views.py:180
+msgid "Thanks for adding the crag"
+msgstr ""
+
+#: apps/crags/templates/crag_detail.html:73
+msgid "Info"
+msgstr ""
+
+#: apps/crags/templates/crag_detail.html:74
+#: apps/crags/templates/crag_detail.html:96
+msgid "Sectors"
+msgstr ""
+
+#: apps/crags/templates/crag_detail.html:75
+msgid "Topos"
+msgstr ""
+
+#: apps/crags/templates/crag_detail.html:76
+msgid "Add to my projects"
+msgstr ""
+
+#: apps/crags/templates/crag_detail.html:111
+msgid "Topos of"
+msgstr ""
+
+#: apps/crags/templates/crag_detail.html:138
+msgid "New Sector"
+msgstr ""
+
+#: apps/crags/templates/crag_detail.html:141
+msgid "Add a new sector to"
+msgstr ""
+
+#: apps/crags/templates/crag_detail.html:143
+msgid "Sector information"
+msgstr ""
+
+#: apps/crags/templates/crag_detail.html:147
+msgid "Close"
+msgstr ""
+
+#: apps/crags/templates/crag_detail.html:156
+msgid "New Topo"
+msgstr ""
+
+#: apps/crags/templates/crag_list.html:4
+msgid "Crag list"
+msgstr ""
+
+#: apps/crags/templates/crag_list.html:11
+msgid "Crag List"
+msgstr ""
+
+#: apps/crags/templates/crag_list.html:16
+#: templates/profiles/_profile_info.html:3
+msgid "Name"
+msgstr ""
+
+#: apps/crags/templates/crag_list.html:17
+msgid "Type"
+msgstr ""
+
+#: apps/crags/templates/crag_list.html:18
+msgid "Country"
+msgstr ""
+
+#: apps/crags/templates/crag_list.html:19
+msgid "Photo"
+msgstr ""
+
+#: apps/crags/templates/crag_new.html:9
+msgid "Add a new Crag"
+msgstr ""
+
+#: apps/crags/templates/crag_new.html:89
+msgid "Search location"
+msgstr ""
+
+#: apps/crags/templates/crag_new.html:95
+msgid "New Crag"
+msgstr ""
+
+#: apps/crags/templates/crags_map.html:5 templates/site_base.html:17
+msgid "Crags Map"
+msgstr ""
+
+#: apps/profiles/models.py:8
+msgid "name"
+msgstr ""
+
+#: apps/profiles/models.py:9
+msgid "about"
+msgstr ""
+
+#: apps/profiles/models.py:10
+msgid "location"
+msgstr ""
+
+#: apps/profiles/models.py:11
+msgid "website"
+msgstr ""
+
+#: apps/topos/templates/croquis/croquis_detail.html:5
+#: apps/topos/templates/croquis/croquis_detail.html:9
+msgid "Croquis"
+msgstr ""
+
+#: apps/topos/templates/croquis/croquis_form.html:5
+msgid "New Croquis"
+msgstr ""
+
+#: apps/topos/templates/croquis/croquis_form.html:9
+msgid "Add a new Croquis"
+msgstr ""
+
+#: apps/topos/templates/croquis/croquis_form.html:14
+msgid "Submit"
+msgstr ""
+
+#: apps/topos/templates/croquis/croquis_list.html:5
+msgid "Croquis list"
+msgstr ""
+
+#: apps/topos/templates/croquis/croquis_list.html:9
+msgid "Croquis List"
+msgstr ""
+
 #: templates/homepage.html:6
 msgid "Welcome"
 msgstr ""
 
-#: templates/homepage.html:12
+#: templates/homepage.html:11
 msgid "Welcome to Pinax"
 msgstr ""
 
-#: templates/homepage.html:15
+#: templates/homepage.html:13
 msgid ""
 "\n"
 "        <b>Pinax</b> is a <a href=\"http://djangoproject.com/\">Django</a>\n"
@@ -36,71 +208,65 @@ msgid ""
 "        "
 msgstr ""
 
-#: templates/homepage.html:25
+#: templates/homepage.html:24
 msgid ""
 "\n"
-"        For more information about Pinax, see\n"
-"        <a href=\"http://pinaxproject.com/\">http://pinaxproject.com/</a>.\n"
+"        This project takes the account_project and adds profiles and "
+"notifications.\n"
+"        It is a foundation suitable for many sites that have user accounts "
+"with\n"
+"        profiles.\n"
 "        "
 msgstr ""
 
-#: templates/homepage.html:31
-msgid "About this project"
-msgstr ""
-
-#: templates/homepage.html:34
-msgid ""
-"\n"
-"        This project comes with the bare minimum set of applications and\n"
-"        templates to get you started. It includes no extra tabs, only the\n"
-"        profile and notices tabs are included by default. From here you can\n"
-"        add any extra functionality and applications that you would like.\n"
-"        "
-msgstr ""
-
-#: templates/homepage.html:45
-#, python-format
-msgid "Wondering <a href=\"%(what_next_url)s\">What Next</a>?"
-msgstr ""
-
-#: templates/homepage.html:50
+#: templates/homepage.html:33
 #, python-format
 msgid ""
-"You can <a href=\"%(signup_url)s\">Sign up</a> and <a href=\"%(login_url)s"
-"\">Log in</a> to try out the site."
+"Wondering <a href=\"%(what_next_url)s\" class=\"btn primary large\">What "
+"Next</a>?"
 msgstr ""
 
-#: templates/homepage.html:52
+#: templates/homepage.html:38
 #, python-format
-msgid "You can <a href=\"%(login_url)s\">Log in</a> to try out the site."
+msgid ""
+"You can <a href=\"%(login_url)s\" class=\"btn\">Log In</a> or <a href="
+"\"%(signup_url)s\" class=\"btn btn-primary\">Sign Up</a> to try out the site."
 msgstr ""
 
-#: templates/site_base.html:20
-msgid "Profile"
+#: templates/homepage.html:40
+#, python-format
+msgid ""
+"You can <a href=\"%(login_url)s\" class=\"btn btn-primary btn-large\">Log "
+"In</a> to try out the site."
 msgstr ""
 
-#: templates/site_base.html:21
-msgid "Notices"
+#: templates/site_base.html:15
+msgid "Crags"
 msgstr ""
 
-#: templates/site_base.html:28
-msgid "&copy; 2010 &lt;your company here&gt;"
+#: templates/site_base.html:18
+msgid "Crags list"
 msgstr ""
 
-#: templates/site_base.html:29
+#: templates/site_base.html:19
+msgid "Add crag"
+msgstr ""
+
+#: templates/site_base.html:22 templates/about/about.html:6
+#: templates/profiles/_profile_info.html:4
 msgid "About"
 msgstr ""
 
-#: templates/site_base.html:30
-msgid "Terms of Service"
+#: templates/site_base.html:24
+msgid "Profile"
 msgstr ""
 
-#: templates/site_base.html:31
-msgid "Privacy Policy"
+#: templates/site_base.html:25
+msgid "Notices"
 msgstr ""
 
-#: templates/site_base.html:32
-msgid "DMCA Notice"
+#: templates/about/about.html:9
+msgid "About Where to Climb"
 msgstr ""
 
 #: templates/about/what_next.html:6 templates/about/what_next.html.py:9
@@ -110,11 +276,19 @@ msgstr ""
 #: templates/about/what_next.html:35
 #, python-format
 msgid ""
-"Start by <a href=\"%(signup_url)s\">signing up</a> and <a href=\"%(login_url)"
-"s\">logging in</a>."
+"Start by <a href=\"%(signup_url)s\">signing up</a> and <a href="
+"\"%(login_url)s\">logging in</a>."
 msgstr ""
 
 #: templates/about/what_next.html:37
 #, python-format
 msgid "Start by <a href=\"%(login_url)s\">logging in</a>."
+msgstr ""
+
+#: templates/profiles/_profile_info.html:5
+msgid "Location"
+msgstr ""
+
+#: templates/profiles/_profile_info.html:6
+msgid "Website"
 msgstr ""
