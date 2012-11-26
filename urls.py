@@ -29,6 +29,7 @@ urlpatterns = patterns("",
     url(r"^announcements/", include("announcements.urls")),
     url(r'^crags/', include('crags.urls')),
     url(r'^topos/', include('topos.urls')),
+    url(r'^i18n/', include('django.conf.urls.i18n')),
     #for the maps with gmapi
     url(r'', include('gmapi.urls.media')),
 )

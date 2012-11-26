@@ -34,7 +34,7 @@
             return false;
         };
     </script>
-    <div id="title"><h1>Sector de escalada {{ sector.name }} de la escuela {{ sector.crag.name}}</h1></div>
+    <div id="title"><h1>Climbing sector {{ sector.name }} in the crag {{ sector.crag.name}}</h1></div>
     <div id="entry">
         <h3>Description</h3>
         <p>{{sector.coment}}</p>
@@ -42,7 +42,7 @@
         <h3>Routes</h3>
         {%  if routes.count %}
         
-        <table name="routes_table" class="table">
+        <table name="routes_table" class="table table-condensed">
             <thead>
                 <tr>
                     <th>Name</th>
@@ -66,7 +66,7 @@
         
         
         {% endif %}
-        <button name="nueva_via" id="nueva_via" onclick="nueva_via({{sector.id}});">Añadir via</button>
+        <button name="new_route" id="new_route" onclick="new_route({{sector.id}});">Add a route</button>
     </div>
     <!--
     <div id="title"><h2>Comentarios</h2></div>

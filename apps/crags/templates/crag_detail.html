@@ -73,42 +73,57 @@
             <li><a href="#home" data-toggle="tab">{% trans "Info" %}</a></li>
             <li><a href="#sectors" data-toggle="tab">{% trans "Sectors" %}</a></li>
             <li><a href="#topos" data-toggle="tab">{% trans "Topos" %}</a></li>
-            <li><button class="btn" name="nuevo_proyecto" id="nuevo_proyecto" onclick="nuevo_proyecto();">{% trans "Add to my projects" %}</button></li>
+            <!-- <li><button class="btn" name="nuevo_proyecto" id="nuevo_proyecto" onclick="nuevo_proyecto();">{% trans "Add to my projects" %}</button></li> 
+            -->
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" id="home">
                 
-                <h3>{{ crag.name.capitalize }} is a {{ crag.get_type }} climbing crag located in {{crag.country}}</h3>
+                <h3>{% blocktrans with name=crag.name.capitalize type=crag.get_type country=crag.country %} 
+                    {{ name }} is a {{ type }} climbing crag located in {{country}} 
+                    {% endblocktrans %}</h3>
+                
                 <p>{{ crag.description }}</p>
                 
                 <g:plusone></g:plusone>
                 <div id="fb-root"></div>
-                <fb:like href="http://www.dondeescalar.es/escuelas/ver/{{crag.slug}}/{{crag.id}}/" send="false"	width="380" show_faces="true" font=""></fb:like>
+                <fb:like href="{{crag.get_absolute_url}}/" send="false"	width="380" show_faces="true" font=""></fb:like>
                 <img src="{{crag.foto.display.url}}" /> <br />
                 
-                <h4>Coments</h4>
+                <h4>{% trans "Coments" %}</h4>
                 <div id="fb-root"></div>
                 <script src="http://connect.facebook.net/es_ES/all.js#xfbml=1"></script>
-                <fb:comments href="http://dondeescalar.es/escuelas/ver/{{crag.slug}}/{{crag.id}}/"  num_posts="20" width="580"></fb:comments>
+                <fb:comments href="{{crag.get_absolute_url}}"  num_posts="20" width="580"></fb:comments>
             </div>
             
             <div class="tab-pane" id="sectors">
                 <h3>{% trans "Sectors" %}</h3>
                 {%  if crag.sectors.count %}
-                    <ul class="circle">
-                    {% for sector in crag.sectors.all %}
-                    <li><a href="#" onclick='view_sector("{{ sector.get_absolute_url }}","{{ sector.slug }}");'>{{ sector.name }}</a></li>
-                    {% endfor %}
-                    </ul>
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <th>{% trans "Name" %}</th>
+                                <th>{% trans "Num. of Routes" %}</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {% for sector in crag.sectors.all %}
+                          <tr>
+                            <td><a href="#" onclick='view_sector("{{ sector.get_absolute_url }}","{{ sector.slug }}");'>{{ sector.name }}</a></td>
+                            <td>{{ sector.routes.count }}</td>
+                          </tr>
+                        {% endfor %}
+                        </tbody>
+                    </table>
                 {% else %}
-                    <div class="well">Lo siento, aun no hay ningún sector, da de alta uno!</div>
+                    <div class="well">{% trans "Sorry there's no sector jet" %}</div>
                 {% endif %}
                     
-                    <a href="#new_sector_modal" role="button" class="btn" data-toggle="modal">Add new sector</a>
+                    <a href="#new_sector_modal" role="button" class="btn" data-toggle="modal">{% trans "Add new sector" %}</a>
             </div>
         
             <div class="tab-pane" id="topos">
-                <h3>{% trans "Topos of" %} {{ crag.nnme }}</h3>
+                <h3>{% blocktrans with name=crag.name %} Topos of {{ name }} {% endblocktrans %}</h3>
                 {% if crag.topos.count != 0 %}
                 <table>
                 <tr>

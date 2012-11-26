@@ -3,6 +3,7 @@
 
 import os.path
 import posixpath
+from django.utils.translation import ugettext as _
 
 PROJECT_ROOT = os.path.abspath(os.path.dirname(__file__))
 
@@ -53,6 +54,12 @@ SITE_ID = 1
 # If you set this to False, Django will make some optimizations so as not
 # to load the internationalization machinery.
 USE_I18N = True
+
+LANGUAGES = (
+  ('de', _('German')),
+  ('en', _('English')),
+  ('es', _('Spanish')),
+)
 
 # Absolute path to the directory that holds media.
 # Example: "/home/media/media.lawrence.com/"

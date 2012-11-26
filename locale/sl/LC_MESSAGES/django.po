@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-26 04:12-0500\n"
+"POT-Creation-Date: 2012-11-26 08:24-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -72,7 +72,7 @@ msgid "Info"
 msgstr ""
 
 #: apps/crags/templates/crag_detail.html:74
-#: apps/crags/templates/crag_detail.html:96
+#: apps/crags/templates/crag_detail.html:97
 msgid "Sectors"
 msgstr ""
 
@@ -84,27 +84,41 @@ msgstr ""
 msgid "Add to my projects"
 msgstr ""
 
-#: apps/crags/templates/crag_detail.html:111
+#: apps/crags/templates/crag_detail.html:102
+#: apps/crags/templates/crag_list.html:16
+#: templates/profiles/_profile_info.html:3
+msgid "Name"
+msgstr ""
+
+#: apps/crags/templates/crag_detail.html:103
+msgid "Num. of Routes"
+msgstr ""
+
+#: apps/crags/templates/crag_detail.html:116
+msgid "Sorry there's no sector jet"
+msgstr ""
+
+#: apps/crags/templates/crag_detail.html:123
 msgid "Topos of"
 msgstr ""
 
-#: apps/crags/templates/crag_detail.html:138
+#: apps/crags/templates/crag_detail.html:150
 msgid "New Sector"
 msgstr ""
 
-#: apps/crags/templates/crag_detail.html:141
+#: apps/crags/templates/crag_detail.html:153
 msgid "Add a new sector to"
 msgstr ""
 
-#: apps/crags/templates/crag_detail.html:143
+#: apps/crags/templates/crag_detail.html:155
 msgid "Sector information"
 msgstr ""
 
-#: apps/crags/templates/crag_detail.html:147
+#: apps/crags/templates/crag_detail.html:159
 msgid "Close"
 msgstr ""
 
-#: apps/crags/templates/crag_detail.html:156
+#: apps/crags/templates/crag_detail.html:168
 msgid "New Topo"
 msgstr ""
 
@@ -114,11 +128,6 @@ msgstr ""
 
 #: apps/crags/templates/crag_list.html:11
 msgid "Crag List"
-msgstr ""
-
-#: apps/crags/templates/crag_list.html:16
-#: templates/profiles/_profile_info.html:3
-msgid "Name"
 msgstr ""
 
 #: apps/crags/templates/crag_list.html:17

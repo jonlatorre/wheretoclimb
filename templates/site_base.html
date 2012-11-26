@@ -25,10 +25,29 @@
             <li id="tab_notices"><a href="{% url notification_notices %}">{% trans "Notices" %}{% if notice_unseen_count %} ({{ notice_unseen_count }}){% endif %}</a></li>
     {% endif %}
     {% endspaceless %}</ul>
+    
+    
 {% endblock %}
 
 {% block footer %}
     {% include "_footer.html" %}
+    <!--
+    {% get_language_info for LANGUAGE_CODE as lang %}
+    Language code: {{ lang.code }} | Name of language: {{ lang.name_local }} | Name in English: {{ lang.name }} | Bi-directional: {{ lang.bidi }}
+    <br />
+    <form action="/i18n/setlang/" method="post">
+{% csrf_token %}
+<input name="next" type="hidden" value="{{ redirect_to }}" />
+<select name="language">
+{% get_language_info_list for LANGUAGES as languages %}
+{% for language in languages %}
+<option value="{{ language.code }}">{{ language.name_local }} ({{ language.code }})</option>
+{% endfor %}
+</select>
+<input type="submit" value="Go" />
+</form>
+-->
+
 {% endblock %}
 
 {% block extra_body_base %}

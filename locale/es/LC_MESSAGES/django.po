@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2012-11-26 04:12-0500\n"
+"POT-Creation-Date: 2012-11-26 08:24-0500\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -71,7 +71,7 @@ msgid "Info"
 msgstr "Información"
 
 #: apps/crags/templates/crag_detail.html:74
-#: apps/crags/templates/crag_detail.html:96
+#: apps/crags/templates/crag_detail.html:97
 msgid "Sectors"
 msgstr "Sectores"
 
@@ -83,27 +83,41 @@ msgstr "Croquis"
 msgid "Add to my projects"
 msgstr "Añadir a mis proyectos"
 
-#: apps/crags/templates/crag_detail.html:111
+#: apps/crags/templates/crag_detail.html:102
+#: apps/crags/templates/crag_list.html:16
+#: templates/profiles/_profile_info.html:3
+msgid "Name"
+msgstr "Nombre"
+
+#: apps/crags/templates/crag_detail.html:103
+msgid "Num. of Routes"
+msgstr ""
+
+#: apps/crags/templates/crag_detail.html:116
+msgid "Sorry there's no sector jet"
+msgstr ""
+
+#: apps/crags/templates/crag_detail.html:123
 msgid "Topos of"
 msgstr "Croquis de"
 
-#: apps/crags/templates/crag_detail.html:138
+#: apps/crags/templates/crag_detail.html:150
 msgid "New Sector"
 msgstr "Nuevo sector"
 
-#: apps/crags/templates/crag_detail.html:141
+#: apps/crags/templates/crag_detail.html:153
 msgid "Add a new sector to"
 msgstr "Añadir un sector a"
 
-#: apps/crags/templates/crag_detail.html:143
+#: apps/crags/templates/crag_detail.html:155
 msgid "Sector information"
 msgstr "Información del sector"
 
-#: apps/crags/templates/crag_detail.html:147
+#: apps/crags/templates/crag_detail.html:159
 msgid "Close"
 msgstr "Cerrar"
 
-#: apps/crags/templates/crag_detail.html:156
+#: apps/crags/templates/crag_detail.html:168
 msgid "New Topo"
 msgstr "Nuevo Croquis"
 
@@ -114,11 +128,6 @@ msgstr "Lista de escuelas"
 #: apps/crags/templates/crag_list.html:11
 msgid "Crag List"
 msgstr "Lista de escuelas"
-
-#: apps/crags/templates/crag_list.html:16
-#: templates/profiles/_profile_info.html:3
-msgid "Name"
-msgstr "Nombre"
 
 #: apps/crags/templates/crag_list.html:17
 msgid "Type"
@@ -146,23 +155,23 @@ msgstr "Nueva escuela"
 
 #: apps/crags/templates/crags_map.html:5 templates/site_base.html:17
 msgid "Crags Map"
-msgstr ""
+msgstr "Mapa"
 
 #: apps/profiles/models.py:8
 msgid "name"
-msgstr ""
+msgstr "nueva"
 
 #: apps/profiles/models.py:9
 msgid "about"
-msgstr ""
+msgstr "acerca de"
 
 #: apps/profiles/models.py:10
 msgid "location"
-msgstr ""
+msgstr "posición"
 
 #: apps/profiles/models.py:11
 msgid "website"
-msgstr ""
+msgstr "Sitio web"
 
 #: apps/topos/templates/croquis/croquis_detail.html:5
 #: apps/topos/templates/croquis/croquis_detail.html:9
@@ -179,7 +188,7 @@ msgstr ""
 
 #: apps/topos/templates/croquis/croquis_form.html:14
 msgid "Submit"
-msgstr ""
+msgstr "Enviar"
 
 #: apps/topos/templates/croquis/croquis_list.html:5
 msgid "Croquis list"
@@ -191,7 +200,7 @@ msgstr ""
 
 #: templates/homepage.html:6
 msgid "Welcome"
-msgstr ""
+msgstr "Bienvenido"
 
 #: templates/homepage.html:11
 msgid "Welcome to Pinax"
@@ -242,36 +251,36 @@ msgstr ""
 
 #: templates/site_base.html:15
 msgid "Crags"
-msgstr ""
+msgstr "Escuelas"
 
 #: templates/site_base.html:18
 msgid "Crags list"
-msgstr ""
+msgstr "Lista de escuelas"
 
 #: templates/site_base.html:19
 msgid "Add crag"
-msgstr ""
+msgstr "Añadir escuela"
 
 #: templates/site_base.html:22 templates/about/about.html:6
 #: templates/profiles/_profile_info.html:4
 msgid "About"
-msgstr ""
+msgstr "Acerca de"
 
 #: templates/site_base.html:24
 msgid "Profile"
-msgstr ""
+msgstr "Perfil"
 
 #: templates/site_base.html:25
 msgid "Notices"
-msgstr ""
+msgstr "Noticias"
 
 #: templates/about/about.html:9
 msgid "About Where to Climb"
-msgstr ""
+msgstr "Acerca de Where To Climb"
 
 #: templates/about/what_next.html:6 templates/about/what_next.html.py:9
 msgid "What Next?"
-msgstr ""
+msgstr "Y ahora?"
 
 #: templates/about/what_next.html:35
 #, python-format
@@ -287,8 +296,8 @@ msgstr ""
 
 #: templates/profiles/_profile_info.html:5
 msgid "Location"
-msgstr ""
+msgstr "Posicion"
 
 #: templates/profiles/_profile_info.html:6
 msgid "Website"
-msgstr ""
+msgstr "Sitio Web"
