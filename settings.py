@@ -229,6 +229,10 @@ DEBUG_TOOLBAR_CONFIG = {
     "INTERCEPT_REDIRECTS": False,
 }
 
+#We load the weather library in gmapi and activate the sensor
+GMAPI_MAPS_URL='http://maps.google.com/maps/api/js?libraries=weather&sensor=true'
+
+
 # local_settings.py can be used to override environment-specific settings
 # like database and email that differ between development and production.
 try:

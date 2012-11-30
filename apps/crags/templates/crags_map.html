@@ -27,6 +27,14 @@
             $('div[name="crags_map"]').children().width($('div[class="span12"]').width());
             $('div[name="crags_map"]').children().height($('div[class="row-fluid"]').height());
         });
+        $(function() 
+        {
+            var map = $("#map").getMap();
+            var weatherLayer = new google.maps.weather.WeatherLayer({
+                  temperatureUnits: google.maps.weather.TemperatureUnit.FAHRENHEIT
+                });
+            weatherLayer.setMap(map);
+        });
         
     </script>
 {% endblock %}
@@ -34,7 +42,7 @@
 {% block body %}
 <div class="row-fluid">
     <div class="span12">
-                    {{ form.map }}
+        {{ form.map }}
     </div>
 </div>
 {% endblock %}
