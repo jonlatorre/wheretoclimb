@@ -276,12 +276,12 @@ def crags_route_new(request,id):
 
 def crags_route_view(request, slug, id):
     try:
-        via = Via.objects.get(slug=slug, id=id)
+        route = Route.objects.get(slug=slug, id=id)
     #except ObjectDoesNotExist:
     except:
-        via = get_object_or_404(Via, id=id)
-        return HttpResponsePermanentRedirect(via.get_absolute_url())
-    return render_to_response('via_detalle.html',{'via': via },RequestContext(request))
+        route = get_object_or_404(Route, id=id)
+        return HttpResponsePermanentRedirect(route.get_absolute_url())
+    return render_to_response('route_detail.html',{'route': route },RequestContext(request))
 
 def crags_sector_new(request,id):
     """Recibimos el id de la Crag a la que queremos añadir el nuevo sector"""

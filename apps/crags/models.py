@@ -133,6 +133,6 @@ class Route(models.Model):
         self.slug = defaultfilters.slugify(self.name)
         super(Route, self).save(*args, **kwargs)
     def get_absolute_url(self):
-        return "/crags/route/%s/%i" % (self.slug,self.id)
+        return "/crags/route/%s/%i/" % (self.slug,self.id)
     def get_type(self):
         return CLIMBING_TYPE[int(self.climbing_type)][1]

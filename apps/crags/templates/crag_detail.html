@@ -2,65 +2,34 @@
 {% load bootstrap_tags %}
 {% load i18n %}
 
-{% block title%}Detalle de escuela {{ crag.nombre }}{% endblock %}
+{% block title%}
+{%trans "Details of" %} {{ crag.nombre }}
+{% endblock %}
+
 {% block extra_script %}
-{{ form.media.js }}
+<!-- For the modals and bootbots alerts -->
 <script type="text/javascript" src="/site_media/static/js/bootbox.min.js"></script>
+<script type="text/javascript" src="/site_media/static/bootstrap/js/bootstrap-modal.js"></script>
 <!--Para el +1 de google -->
 <script type="text/javascript" src="http://apis.google.com/js/plusone.js"></script>
 <!--Para el me gusta de facebook -->
 <script src="http://connect.facebook.net/es_ES/all.js#appId=150167131719845&amp;xfbml=1"></script>
-<script type="text/javascript" language="javascript">
-        function anadir_croquis(id) {
-			
-            console.log("Vamos a aladir un croquis a "+id);
-            //$('#anadir_croquis').
-            var $dialog = $('<div id="dialogcroquis"></div>')
-                .html('')
-                .dialog({
-                    autoOpen: false,
-                    title: 'Añadir croquis',
-                    modal: true
-                });
-            $dialog.dialog( "option", "minWidth", 450 );
-            $dialog.dialog('open');
-            $dialog.load('/escuelas/croquis/nuevo/'+id+'/');
-            // prevent the default action, e.g., following a link
-            return false;
-            }
-        function view_sector(url,nombre) {
-            console.log("We are going to view "+nombre+" from the url: "+url);
-            $.get(url, function(data) {
-                bootbox.alert(data);
-                console.log('Load was performed.');
-            });
-            return false;
-        };
 
-        function nuevo_proyecto() {
-            var $dialogGroup = $('<div id="dialog"></div>')
-                .html('')
-                .dialog({
-                    autoOpen: false,
-                    title: 'New project',
-                    modal: true
-                });
-            $dialogGroup.dialog('open');
-            $dialogGroup.load('/projetcs/new/{{crag.id}}/');
-            // prevent the default action, e.g., following a link
-            return false;
-        }
-        
-        $(document).ready(function(){
-            $('#anadir_croquis').modal({
-            keyboard: false
-            });
-            $('#myTab a:last').tab('show');
+{{ form.media.js }}
+
+<script type="text/javascript" language="javascript">
+    $(window).bind("load resize", function(){
+         $('div[class="gmap"]').children().width($('div[class="span4"]').width());
+    });
+    function view_sector_or_route(url,nombre) {
+        console.log("We are going to view "+nombre+" from the url: "+url);
+        $.get(url, function(data) {
+            bootbox.alert(data);
+            console.log('Load was performed.');
         });
-        $(window).bind("load resize", function(){
-             $('div[class="gmap"]').children().width($('div[class="span4"]').width());
-        });
-     </script>
+        return false;
+    };
+</script>
 {% endblock %}
 
 {% block body %}
@@ -73,8 +42,6 @@
             <li><a href="#home" data-toggle="tab">{% trans "Info" %}</a></li>
             <li><a href="#sectors" data-toggle="tab">{% trans "Sectors" %}</a></li>
             <li><a href="#topos" data-toggle="tab">{% trans "Topos" %}</a></li>
-            <!-- <li><button class="btn" name="nuevo_proyecto" id="nuevo_proyecto" onclick="nuevo_proyecto();">{% trans "Add to my projects" %}</button></li> 
-            -->
         </ul>
         <div class="tab-content">
             <div class="tab-pane active" id="home">
@@ -82,18 +49,20 @@
                 <h3>{% blocktrans with name=crag.name.capitalize type=crag.get_type country=crag.country %} 
                     {{ name }} is a {{ type }} climbing crag located in {{country}} 
                     {% endblocktrans %}</h3>
-                
+                <h4>{% trans "Description" %}</h4>
                 <p>{{ crag.description }}</p>
-                
-                <g:plusone></g:plusone>
-                <div id="fb-root"></div>
-                <fb:like href="{{crag.get_absolute_url}}/" send="false"	width="380" show_faces="true" font=""></fb:like>
-                <img src="{{crag.foto.display.url}}" /> <br />
-                
-                <h4>{% trans "Coments" %}</h4>
+                <h4>{% trans "Comments" %}</h4>
                 <div id="fb-root"></div>
                 <script src="http://connect.facebook.net/es_ES/all.js#xfbml=1"></script>
-                <fb:comments href="{{crag.get_absolute_url}}"  num_posts="20" width="580"></fb:comments>
+                
+                <fb:comments href="http://wheretoclimb.com{{crag.get_absolute_url}}"  num_posts="20" width="580"></fb:comments>
+                
+                <h4>{% trans "Like it!" %}</h4>
+                <g:plusone></g:plusone>
+                <div id="fb-root"></div>
+                <fb:like href="http://wheretoclimb.com{{crag.get_absolute_url}}/" send="false"	width="380" show_faces="true" font=""></fb:like>
+                <img src="{{crag.foto.display.url}}" /> <br />
+                
             </div>
             
             <div class="tab-pane" id="sectors">
@@ -109,7 +78,7 @@
                         <tbody>
                         {% for sector in crag.sectors.all %}
                           <tr>
-                            <td><a href="#" onclick='view_sector("{{ sector.get_absolute_url }}","{{ sector.slug }}");'>{{ sector.name }}</a></td>
+                            <td><a href="#" onclick='view_sector_or_route("{{ sector.get_absolute_url }}","{{ sector.slug }}");'>{{ sector.name }}</a></td>
                             <td>{{ sector.routes.count }}</td>
                           </tr>
                         {% endfor %}
@@ -153,14 +122,13 @@
     <h3>{% trans "New Sector" %}</h3>
   </div>
   <div class="modal-body">
-    <strong>{% trans "Add a new sector to" %}{{ crag.name }}</strong>
+    <strong>{% trans "Add a new sector to" %} {{ crag.name }}</strong>
     <form class="form-horizontal" name="sector_form" enctype="multipart/form-data" action="{% url crags_sector_new crag.id%}" method="post">{% csrf_token %}
-    <p>{% trans "Sector information" %}</p>
     {{ form_sector|as_bootstrap }}
   </div>
   <div class="modal-footer">
     <a href="#" class="btn" data-dismiss="modal">{% trans "Close" %}</a>
-    <input  class="submit btn-form" type="submit" value="Add" />
+    <input  class="btn btn-primary" type="submit" value="Add" />
     </form>
   </div>
 </div>
@@ -176,7 +144,7 @@
     {{ form_topo|as_bootstrap }}
   </div>
   <div class="modal-footer">
-    <input  class="submit btn-form" type="submit" value="Add" />
+    <input  class="btn btn-primary" type="submit" value="Add" />
     </form>
   </div>
 </div>

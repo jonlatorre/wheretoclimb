@@ -16,45 +16,29 @@
             // prevent the default action, e.g., following a link
             return false;
         };
-        function ver_via(url,nombre) {
-            console.log("Vamos a ver los detalles de la via:");
-            console.log(url);
-            var $dialog = $('<div id="dialogvia"></div>')
-                .html('')
-                .dialog({
-                    autoOpen: false,
-                    title: 'Detalle via '+nombre,
-                    modal: true
-                });
-            $dialog.dialog( "option", "minWidth", 700 );
-            $dialog.dialog( "option", "minHeight", 580 );
-            $dialog.dialog('open');
-            $dialog.load(url);
-            // prevent the default action, e.g., following a link
-            return false;
-        };
+
     </script>
     <div id="title"><h1>Climbing sector {{ sector.name }} in the crag {{ sector.crag.name}}</h1></div>
     <div id="entry">
-        <h3>Description</h3>
+        <h3>{% trans "Description" %}</h3>
         <p>{{sector.coment}}</p>
         
-        <h3>Routes</h3>
+        <h3>{% trans "Routes" %}</h3>
         {%  if routes.count %}
         
         <table name="routes_table" class="table table-condensed">
             <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Type</th>
-                    <th>Grade</th>
-                    <th>Long.</th>
+                    <th>{% trans "Name" %}</th>
+                    <th>{% trans "Type" %}</th>
+                    <th>{% trans "Grade" %}</th>
+                    <th>{% trans "Long." %}</th>
                 </tr>
             </thead>
             <tbody>
             {% for route in routes %}
             <tr>
-            <td> <a href="#" onclick='#'>{{ route.name.capitalize }}</a> </td>
+            <td> <a href="#" onclick='view_sector_or_route("{{ route.get_absolute_url }}","{{ route.slug }}")'>{{ route.name.capitalize }}</a> </td>
             <td>{{ route.get_type }}</td>
             <td>{{ route.grade.name }}</td>
             <td>{{ route.longitude }}</td>
@@ -62,11 +46,8 @@
             {% endfor %}
             </tbody>
         </table>
-        
-        
-        
         {% endif %}
-        <button name="new_route" id="new_route" onclick="new_route({{sector.id}});">Add a route</button>
+        <button name="new_route" id="new_route" onclick="new_route({{sector.id}});">{% trans "Add a route" %}</button>
     </div>
     <!--
     <div id="title"><h2>Comentarios</h2></div>

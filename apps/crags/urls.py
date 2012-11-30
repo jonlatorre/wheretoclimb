@@ -31,6 +31,8 @@ info_dict = {
 urlpatterns = patterns('',
     url(r'sector/new/(?P<id>\d+)/$', crags_sector_new, name="crags_sector_new"),
     url(r'sector/(?P<slug>[-\w]+)/(?P<id>\d+)/$', crags_sector_view),
+    url(r'route/new/(?P<id>\d+)/$', crags_route_new, name="crags_route_new"),
+    url(r'route/(?P<slug>[-\w]+)/(?P<id>\d+)/$', crags_route_view),
     url(r'topo/new/(?P<id>\d+)/$', crags_topo_new, name="crags_topo_new"),
     url(r'list/$', CragListView.as_view(), name="crags_list"),
     #(r'provincia/(?P<id>\d+)/$', lista_provincia),
@@ -40,7 +42,6 @@ urlpatterns = patterns('',
     url(r'edit/(\d+)/$', crags_crag_edit),
     url(r'latest/$', LatestEntriesFeed()),
     url(r'find/$',crags_find),
-    url(r'route/new/(?P<id>\d+)/$', crags_route_new),
-    url(r'route/(?P<slug>[-\w]+)/(?P<id>\d+)/$', crags_route_view),
+    
     url(r'$', crags_map, name="crags_map"),
 )

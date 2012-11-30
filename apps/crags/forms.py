@@ -58,12 +58,12 @@ class CragForm(ModelForm):
 class SectorForm(ModelForm):
     class Meta:
         model = Sector
-        exclude = ('slug','Photo',)
+        exclude = ('slug','Photo','topos','location')
         
 class RouteForm(ModelForm):
     class Meta:
         model = Route
-        exclude = ('slug','photo','topoes')
+        exclude = ('slug','photo','topos')
         
 class TopoForm(ModelForm):
     class Meta:
